@@ -1,0 +1,71 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+//apply plugin: 'kotlin-android-extensions'
+
+buildscript {
+    ext.kotlin_version = '1.4.20'
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url "https://s01.oss.sonatype.org/content/repositories/releases/"
+//            url "https://s01.oss.sonatype.org/content/groups/staging/"
+        }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.0.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url "https://s01.oss.sonatype.org/content/repositories/releases/"
+//            url "https://s01.oss.sonatype.org/content/groups/staging/"
+        }
+    }
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    libraryVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "pub-sdk-unity-wrapper-${variant.name}.aar"
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+
+    compileOnly files('libs/classes.jar')
+
+    implementation 'io.github.gamepubcorp:pubsdk:2.1.4'
+
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}

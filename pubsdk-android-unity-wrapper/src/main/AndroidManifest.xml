@@ -1,0 +1,11 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.gamepubcorp.sdk.unitywrapper">
+
+    <application>
+        <activity
+            android:name="com.gamepubcorp.sdk.unitywrapper.activity.PubSdkWrapperActivity"
+            android:configChanges="orientation|keyboard|screenSize|smallestScreenSize|screenLayout"
+            android:theme="@style/TransparentStyle" />
+    </application>
+
+</manifest>
