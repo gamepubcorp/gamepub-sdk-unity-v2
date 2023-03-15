@@ -98,9 +98,21 @@ namespace GamepubSDK.Examples
                                       });
                                   }
                                   GUILayout.FlexibleSpace();
-                                  if (GUIHelper.DrawButton("TEST 1", Screen.width / 2, 150))
+                                  if (GUIHelper.DrawButton("InitBilling", Screen.width / 2, 150))
                                   {
-                                      Debug.Log("TEST 1");
+
+                                      GamePubSDK.Ins.InitBilling(result =>
+                                      {
+                                          result.Match(
+                                              value =>
+                                              {
+                                                  Debug.Log(JsonUtility.ToJson(value));
+                                              },
+                                              error =>
+                                              {
+                                                  Debug.Log(JsonUtility.ToJson(error));
+                                              });
+                                      });
                                   }
                                   GUILayout.EndHorizontal();
 
