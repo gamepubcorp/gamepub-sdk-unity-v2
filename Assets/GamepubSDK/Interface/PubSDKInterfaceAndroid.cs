@@ -73,7 +73,7 @@ namespace GamePub.PubSDK
             if (!Application.isPlaying) { return; }
             if (IsInvalidRuntime(identifier)) { return; }
 
-            object[] param = new object[5];
+            object[] param = new object[2];
             param[0] = identifier;
             param[1] = pid;            
 
