@@ -20,7 +20,7 @@ enum class AccountServiceType(val type: Int) {
     ACCOUNT_LINK(2);
 
     companion object {
-        fun fromInt(value: Int) = AccountServiceType.values().first{
+        fun fromInt(value: Int) = values().first{
             it.type == value
         }
     }
@@ -31,12 +31,6 @@ enum class LoginType(val type: Int) {
     FACEBOOK(2),
     APPLE(3),
     GUEST(4);
-
-    companion object {
-        fun fromInt(value: Int) = LoginType.values().first{
-            it.type == value
-        }
-    }
 }
 
 enum class LanguageCode(val type: Int) {
@@ -52,12 +46,6 @@ enum class LanguageCode(val type: Int) {
     fr(9),
     de(10),
     ru(11);
-
-    companion object {
-        fun fromInt(value: Int) = LanguageCode.values().first{
-            it.type == value
-        }
-    }
 }
 
 class PubSdkWrapperActivity : Activity() {
@@ -68,8 +56,8 @@ class PubSdkWrapperActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        parseIntent();
-        startPubSdkLoginActivity();
+        parseIntent()
+        startPubSdkLoginActivity()
     }
 
     private fun parseIntent() {
@@ -114,13 +102,13 @@ class PubSdkWrapperActivity : Activity() {
                 val type = PubAccountServiceType.valueOf(accountServiceType.name)
                 PubLoginApi.getFacebookLoginIntent(this, type)
             }
-            PubLoginType.GUEST.ordinal -> {
-                val type = PubAccountServiceType.valueOf(accountServiceType.name)
-                PubLoginApi.getGuestLoginIntent(this, type)
-            }
             PubLoginType.APPLE.ordinal -> {
                 val type = PubAccountServiceType.valueOf(accountServiceType.name)
                 PubLoginApi.getAppleLoginIntent(this, type)
+            }
+            PubLoginType.GUEST.ordinal -> {
+                val type = PubAccountServiceType.valueOf(accountServiceType.name)
+                PubLoginApi.getGuestLoginIntent(this, type)
             }
             else -> {
                 Log.d(TAG, "login error")
@@ -137,11 +125,11 @@ class PubSdkWrapperActivity : Activity() {
             PubLoginType.FACEBOOK.ordinal -> {
                 PubLoginApi.getFacebookLoginResultFromIntent(data)
             }
-            PubLoginType.GUEST.ordinal -> {
-                PubLoginApi.getGuestLoginResultFromIntent(data)
-            }
             PubLoginType.APPLE.ordinal -> {
                 PubLoginApi.getAppleLoginResultFromIntent(data)
+            }
+            PubLoginType.GUEST.ordinal -> {
+                PubLoginApi.getGuestLoginResultFromIntent(data)
             }
             else -> {
                 Log.d(TAG, "data null")

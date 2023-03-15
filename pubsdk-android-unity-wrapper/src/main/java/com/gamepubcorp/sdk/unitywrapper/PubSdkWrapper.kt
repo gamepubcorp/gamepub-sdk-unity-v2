@@ -8,12 +8,14 @@ import com.gamepubcorp.sdk.unitywrapper.util.Log
 import com.google.gson.Gson
 import com.unity3d.player.UnityPlayer
 import io.github.gamepubcorp.PubCallback
+import io.github.gamepubcorp.cs.PubTermsResult
 import io.github.gamepubcorp.data.PubUnit
 import io.github.gamepubcorp.iap.PubInAppProduct
 import io.github.gamepubcorp.iap.PubPurchaseResult
 
 class PubSdkWrapper {
 
+    private val TAG = "PubSdkWrapper"
     private lateinit var pubApiClient: PubApiClient
     private val gson = Gson()
 
@@ -50,6 +52,18 @@ class PubSdkWrapper {
             loginType,
             accountServiceType
         )
+    }
+
+    fun autoLogin(identifier: String) {
+        pubApiClient.autologin(PubCallback<PubUnit>().apply {
+            success = { res ->
+                val result = gson.toJson(res)
+                CallbackMessageForUnity(identifier, result).sendMessageOk()
+            }
+            error = { err ->
+                sendMessageError(identifier, err)
+            }
+        })
     }
 
     fun logout()
@@ -91,9 +105,46 @@ class PubSdkWrapper {
         )
     }
 
+    fun restorePurchase(identifier: String) {
+        val currentActivity = UnityPlayer.currentActivity
 
+        pubApiClient.restorePurchase(currentActivity,
+            PubCallback<PubPurchaseResult>().apply {
+            success = { res ->
+                val result = gson.toJson(res)
+                CallbackMessageForUnity(identifier, result).sendMessageOk()
+            }
+            error = { err ->
+                sendMessageError(identifier, err)
+            }
+        })
+    }
 
-    companion object {
-        private const val TAG: String = "PubSdkWrapper"
+    fun openTerms(identifier: String){
+        val currentActivity = UnityPlayer.currentActivity
+
+        pubApiClient.openTerms(currentActivity, PubCallback<PubTermsResult>().apply {
+            success = { res ->
+                val result = gson.toJson(res)
+                CallbackMessageForUnity(identifier, result).sendMessageOk()
+            }
+            error = { err ->
+                sendMessageError(identifier, err)
+            }
+        })
+    }
+
+    fun openImageBanner(identifier: String) {
+        val currentActivity = UnityPlayer.currentActivity
+
+        pubApiClient.openImageBanner(currentActivity)
+    }
+
+    fun setPushToken(identifier: String) {
+
+    }
+
+    fun setPushConfig(identifier: String) {
+
     }
 }
