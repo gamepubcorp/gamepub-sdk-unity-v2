@@ -14,7 +14,7 @@ data class UserLoginInfo(
         fun convertPubLoginInfo(loginInfo: PubLoginInfo): UserLoginInfo =
             UserLoginInfo(
                 loginInfo.accountId,
-                loginInfo.loginToken,
+                loginInfo.accessToken,
                 loginInfo.regMessage,
                 loginInfo.startDate,
                 loginInfo.endDate

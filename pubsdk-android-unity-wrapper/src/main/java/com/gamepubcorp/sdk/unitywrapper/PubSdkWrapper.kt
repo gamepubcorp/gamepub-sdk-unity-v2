@@ -10,7 +10,7 @@ import com.unity3d.player.UnityPlayer
 import io.github.gamepubcorp.PubCallback
 import io.github.gamepubcorp.cs.PubTermsResult
 import io.github.gamepubcorp.data.PubUnit
-import io.github.gamepubcorp.iap.PubInAppProduct
+import io.github.gamepubcorp.iap.PubInAppListResult
 import io.github.gamepubcorp.iap.PubPurchaseResult
 
 class PubSdkWrapper {
@@ -76,7 +76,7 @@ class PubSdkWrapper {
         val currentActivity = UnityPlayer.currentActivity
 
         pubApiClient.initBilling(currentActivity,
-            PubCallback<List<PubInAppProduct>>().apply {
+            PubCallback<PubInAppListResult>().apply {
                 success = { res ->
                     val result = gson.toJson(res)
                     CallbackMessageForUnity(identifier, result).sendMessageOk()

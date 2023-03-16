@@ -4,12 +4,15 @@ apply plugin: 'kotlin-android'
 
 buildscript {
     ext.kotlin_version = '1.4.20'
+    ext.staging_num = '1135'
+    ext.sdk_version = '2.1.5-test'
+
     repositories {
         google()
         mavenCentral()
         maven {
-            url "https://s01.oss.sonatype.org/content/repositories/releases/"
-//            url "https://s01.oss.sonatype.org/content/groups/staging/"
+//            url "https://s01.oss.sonatype.org/content/repositories/releases/"
+            url "https://s01.oss.sonatype.org/content/repositories/iogithubgamepubcorp-$staging_num"
         }
     }
     dependencies {
@@ -23,8 +26,8 @@ allprojects {
         google()
         mavenCentral()
         maven {
-            url "https://s01.oss.sonatype.org/content/repositories/releases/"
-//            url "https://s01.oss.sonatype.org/content/groups/staging/"
+//            url "https://s01.oss.sonatype.org/content/repositories/releases/"
+            url "https://s01.oss.sonatype.org/content/repositories/iogithubgamepubcorp-$staging_num"
         }
     }
 }
@@ -64,7 +67,7 @@ dependencies {
 
     compileOnly files('libs/classes.jar')
 
-    implementation 'io.github.gamepubcorp:pubsdk:2.1.4'
+    implementation "io.github.gamepubcorp:pubsdk:$sdk_version"
 
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
