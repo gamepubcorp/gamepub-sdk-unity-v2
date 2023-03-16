@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace GamePub.PubSDK
@@ -52,9 +51,14 @@ namespace GamePub.PubSDK
             GamePubAPI.Login(loginType, serviceType, action);
         }
 
-        public void Logout()
+		public void AutoLogin(Action<Result<PubUnit>> action)
+		{
+			GamePubAPI.AutoLogin(action);
+		}
+
+		public void Logout(Action<Result<PubUnit>> action)
         {            
-            GamePubAPI.Logout();            
+            GamePubAPI.Logout(action);            
         }
 
         public void InitBilling(Action<Result<PubInAppListResult>> action)
@@ -68,7 +72,22 @@ namespace GamePub.PubSDK
             GamePubAPI.InAppPurchase(pid, action);
         }
 
-        public void OnApiOk(string result)
+		public void RestorePurchase(Action<Result<PubPurchaseResult>> action)
+		{
+			GamePubAPI.RestorePurchase(action);
+		}
+
+		public void OpenTerms(Action<Result<PubTermsResult>> action)
+		{
+			GamePubAPI.OpenTerms(action);
+		}
+
+		public void OpenImageBanner(Action<Result<PubUnit>> action)
+		{
+			GamePubAPI.OpenImageBanner(action);
+		}
+
+		public void OnApiOk(string result)
         {
             result.SuccessLog();            
             GamePubAPI._OnApiOk(result);

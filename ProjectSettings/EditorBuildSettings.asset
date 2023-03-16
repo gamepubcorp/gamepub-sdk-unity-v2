@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/GamepubSDK/Demo/Scenes/Main.unity
-    guid: adb85cd758b3542f89c3fbeb0fb5e8d0
+    path: Assets/GamepubSDK/Demo/Scenes/Login.unity
+    guid: a898a487441a24494806397911498272
   m_configObjects: {}

@@ -25,14 +25,24 @@ namespace GamePub.PubSDK
             NativeInterface.Login(identifier, loginType, serviceType);
         }
 
-        public static void Logout()
-        {            
-            NativeInterface.Logout();
+        public static void AutoLogin(Action<Result<PubUnit>> action)
+        {
+			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
+
+			NativeInterface.AutoLogin(identifier);
+		}
+
+        public static void Logout(Action<Result<PubUnit>> action)
+        {
+			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
+
+			NativeInterface.Logout(identifier);
         }
 
         public static void InitBilling(Action<Result<PubInAppListResult>> action)
         {
             var identifier = AddAction(FlattenAction.JsonFlatten<PubInAppListResult>(action));
+
             NativeInterface.InitBilling(identifier);
         }
 
@@ -43,7 +53,28 @@ namespace GamePub.PubSDK
             NativeInterface.InAppPurchase(identifier, pid);
         }
 
-        static string AddAction(FlattenAction action)
+		public static void RestorePurchase(Action<Result<PubPurchaseResult>> action)
+		{
+			var identifier = AddAction(FlattenAction.JsonFlatten<PubPurchaseResult>(action));
+
+			NativeInterface.RestorePurchase(identifier);
+		}
+
+		public static void OpenTerms(Action<Result<PubTermsResult>> action)
+		{
+			var identifier = AddAction(FlattenAction.JsonFlatten<PubTermsResult>(action));
+
+			NativeInterface.OpenTerms(identifier);
+		}
+
+		public static void OpenImageBanner(Action<Result<PubUnit>> action)
+		{
+			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
+
+			NativeInterface.OpenImageBanner(identifier);
+		}
+
+		static string AddAction(FlattenAction action)
         {
             var identifier = Guid.NewGuid().ToString();
             actions.Add(identifier, action);

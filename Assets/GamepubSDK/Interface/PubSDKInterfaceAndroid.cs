@@ -46,12 +46,27 @@ namespace GamePub.PubSDK
                 pubSdkWrapper.Call("login", param);
         }
 
-        public static void Logout()
+        public static void AutoLogin(string identifier)
+        {
+			if (!Application.isPlaying) { return; }
+			if (IsInvalidRuntime(identifier)) { return; }
+
+			object[] param = new object[1];
+			param[0] = identifier;
+
+			if (pubSdkWrapper != null)
+				pubSdkWrapper.Call("autoLogin", param);
+		}
+
+        public static void Logout(string identifier)
         {
             if (!Application.isPlaying) { return; }
-            if (IsInvalidRuntime(null)) { return; }            
+            if (IsInvalidRuntime(null)) { return; }
 
-            if (pubSdkWrapper != null)
+			object[] param = new object[1];
+			param[0] = identifier;
+
+			if (pubSdkWrapper != null)
                 pubSdkWrapper.Call("logout");
         }        
 
@@ -79,9 +94,45 @@ namespace GamePub.PubSDK
 
             if (pubSdkWrapper != null)
                 pubSdkWrapper.Call("purchaseLaunch", param);
-        }        
+        }
 
-        private static bool IsInvalidRuntime(string identifier)
+		public static void RestorePurchase(string identifier)
+		{
+			if (!Application.isPlaying) { return; }
+			if (IsInvalidRuntime(identifier)) { return; }
+
+			object[] param = new object[1];
+			param[0] = identifier;
+
+			if (pubSdkWrapper != null)
+				pubSdkWrapper.Call("restorePurchase", param);
+		}
+
+		public static void OpenTerms(string identifier)
+		{
+			if (!Application.isPlaying) { return; }
+			if (IsInvalidRuntime(identifier)) { return; }
+
+			object[] param = new object[1];
+			param[0] = identifier;
+
+			if (pubSdkWrapper != null)
+				pubSdkWrapper.Call("openTerms", param);
+		}
+
+		public static void OpenImageBanner(string identifier)
+		{
+			if (!Application.isPlaying) { return; }
+			if (IsInvalidRuntime(identifier)) { return; }
+
+			object[] param = new object[1];
+			param[0] = identifier;
+
+			if (pubSdkWrapper != null)
+				pubSdkWrapper.Call("openImageBanner", param);
+		}
+
+		private static bool IsInvalidRuntime(string identifier)
         {
             return Helpers.IsInvalidRuntime(identifier, RuntimePlatform.Android);
         }
