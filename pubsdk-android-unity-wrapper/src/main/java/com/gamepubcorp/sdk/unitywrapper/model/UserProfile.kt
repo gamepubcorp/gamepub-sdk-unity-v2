@@ -1,6 +1,6 @@
 package com.gamepubcorp.sdk.unitywrapper.model
 
-import io.github.gamepubcorp.PubProfile
+import io.github.gamepubcorp.auth.PubProfile
 
 data class UserProfile(
     val loginType: String,

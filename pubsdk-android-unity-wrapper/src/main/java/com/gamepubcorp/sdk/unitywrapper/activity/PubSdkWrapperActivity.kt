@@ -4,9 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import io.github.gamepubcorp.PubAccountServiceType
+import io.github.gamepubcorp.auth.PubAccountServiceType
 import io.github.gamepubcorp.PubApiResponseCode
-import io.github.gamepubcorp.PubLoginType
+import io.github.gamepubcorp.auth.PubLoginType
 import io.github.gamepubcorp.auth.PubLoginApi
 import com.gamepubcorp.sdk.unitywrapper.CallbackMessageForUnity
 import com.gamepubcorp.sdk.unitywrapper.CallbackMessageForUnity.Companion.sendMessageError

@@ -66,10 +66,41 @@ class PubSdkWrapper {
         })
     }
 
-    fun logout()
-    {
+    fun logout(identifier: String) {
         val currentActivity = UnityPlayer.currentActivity
-        pubApiClient.logout(currentActivity)
+        pubApiClient.logout(currentActivity, PubCallback<PubUnit>().apply {
+            success = { res ->
+                val result = gson.toJson(res)
+                CallbackMessageForUnity(identifier, result).sendMessageOk()
+            }
+            error = { err ->
+                sendMessageError(identifier, err)
+            }
+        })
+    }
+
+    fun withdraw(identifier: String) {
+        pubApiClient.withdraw(PubCallback<PubUnit>().apply {
+            success = { res ->
+                val result = gson.toJson(res)
+                CallbackMessageForUnity(identifier, result).sendMessageOk()
+            }
+            error = { err ->
+                sendMessageError(identifier, err)
+            }
+        })
+    }
+
+    fun restoreWithdrawal(identifier: String) {
+        pubApiClient.restoreWithdrawal(PubCallback<PubUnit>().apply {
+            success = { res ->
+                val result = gson.toJson(res)
+                CallbackMessageForUnity(identifier, result).sendMessageOk()
+            }
+            error = { err ->
+                sendMessageError(identifier, err)
+            }
+        })
     }
 
     fun initBilling(identifier: String) {
@@ -89,7 +120,8 @@ class PubSdkWrapper {
     }
 
     fun purchaseLaunch(identifier: String,
-                       pid: String) {
+                       pid: String)
+    {
         val currentActivity = UnityPlayer.currentActivity
 
         pubApiClient.purchase(currentActivity, pid, "", "",
@@ -120,6 +152,10 @@ class PubSdkWrapper {
         })
     }
 
+    fun restoreRefund(identifier: String){
+
+    }
+
     fun openTerms(identifier: String){
         val currentActivity = UnityPlayer.currentActivity
 
@@ -140,11 +176,38 @@ class PubSdkWrapper {
         pubApiClient.openImageBanner(currentActivity)
     }
 
-    fun setPushToken(identifier: String) {
-
+    fun setPushToken(identifier: String,
+                     pushToken: String
+    ) {
+        pubApiClient.setPushToken(pushToken, PubCallback<PubUnit>().apply {
+            success = { res ->
+                val result = gson.toJson(res)
+                CallbackMessageForUnity(identifier, result).sendMessageOk()
+            }
+            error = { err ->
+                sendMessageError(identifier, err)
+            }
+        })
     }
 
-    fun setPushConfig(identifier: String) {
-
+    fun setPushConfig(identifier: String,
+                      agreedPush: Boolean,
+                      agreedNightPush: Boolean,
+                      agreedAdPush: Boolean)
+    {
+        pubApiClient.setPushConfig(
+            agreedPush,
+            agreedNightPush,
+            agreedAdPush,
+            PubCallback<PubUnit>().apply {
+                success = { res ->
+                    val result = gson.toJson(res)
+                    CallbackMessageForUnity(identifier, result).sendMessageOk()
+                }
+                error = { err ->
+                    sendMessageError(identifier, err)
+                }
+            }
+        )
     }
 }

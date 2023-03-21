@@ -1,6 +1,6 @@
 package com.gamepubcorp.sdk.unitywrapper.model
 
-import io.github.gamepubcorp.data.PubLoginInfo
+import io.github.gamepubcorp.auth.PubLoginInfo
 
 data class UserLoginInfo(
     val accountId: String,
