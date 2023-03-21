@@ -129,7 +129,7 @@ public class LoginController : MonoBehaviour
 	public void SetPushConfig()
 	{
 		PubPushConfig pushConfig = new PubPushConfig();
-		pushConfig.AgreedPush = true;
+		pushConfig.AgreedPush = false;
 		pushConfig.AgreedNightPush = true;
 		pushConfig.AgreedAdPush = true;
 
