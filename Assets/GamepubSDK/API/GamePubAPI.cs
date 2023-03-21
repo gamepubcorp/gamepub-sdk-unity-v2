@@ -21,7 +21,6 @@ namespace GamePub.PubSDK
                                  Action<Result<PubLoginResult>> action)
         {
             var identifier = AddAction(FlattenAction.JsonFlatten<PubLoginResult>(action));
-
             NativeInterface.Login(identifier, loginType, serviceType);
         }
 
@@ -32,17 +31,41 @@ namespace GamePub.PubSDK
 			NativeInterface.AutoLogin(identifier);
 		}
 
-        public static void Logout(Action<Result<PubUnit>> action)
+		public static void SetPushToken(string pushToken,
+                                        Action<Result<PubUnit>> action)
+		{
+			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
+			NativeInterface.SetPushToken(identifier, pushToken);
+		}
+
+		public static void SetPushConfig(PubPushConfig pushConfig, 
+                                         Action<Result<PubUnit>> action)
+		{
+			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
+			NativeInterface.SetPushConfig(identifier, pushConfig);
+		}
+
+		public static void Logout(Action<Result<PubUnit>> action)
         {
 			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
-
 			NativeInterface.Logout(identifier);
         }
 
-        public static void InitBilling(Action<Result<PubInAppListResult>> action)
+		public static void Withdraw(Action<Result<PubUnit>> action)
+		{
+			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
+			NativeInterface.Withdraw(identifier);
+		}
+
+		public static void RestoreWithdrawal(Action<Result<PubUnit>> action)
+		{
+			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
+			NativeInterface.RestoreWithdrawal(identifier);
+		}
+
+		public static void InitBilling(Action<Result<PubInAppListResult>> action)
         {
             var identifier = AddAction(FlattenAction.JsonFlatten<PubInAppListResult>(action));
-
             NativeInterface.InitBilling(identifier);
         }
 
@@ -56,21 +79,24 @@ namespace GamePub.PubSDK
 		public static void RestorePurchase(Action<Result<PubPurchaseResult>> action)
 		{
 			var identifier = AddAction(FlattenAction.JsonFlatten<PubPurchaseResult>(action));
-
 			NativeInterface.RestorePurchase(identifier);
+		}
+
+		public static void RestoreRefund(Action<Result<PubUnit>> action)
+		{
+			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
+			NativeInterface.RestoreRefund(identifier);
 		}
 
 		public static void OpenTerms(Action<Result<PubTermsResult>> action)
 		{
 			var identifier = AddAction(FlattenAction.JsonFlatten<PubTermsResult>(action));
-
 			NativeInterface.OpenTerms(identifier);
 		}
 
 		public static void OpenImageBanner(Action<Result<PubUnit>> action)
 		{
 			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
-
 			NativeInterface.OpenImageBanner(identifier);
 		}
 

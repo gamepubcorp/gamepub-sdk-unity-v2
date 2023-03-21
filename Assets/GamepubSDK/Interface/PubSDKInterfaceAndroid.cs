@@ -58,7 +58,37 @@ namespace GamePub.PubSDK
 				pubSdkWrapper.Call("autoLogin", param);
 		}
 
-        public static void Logout(string identifier)
+		public static void SetPushToken(string identifier, 
+                                        string pushToken)
+		{
+			if (!Application.isPlaying) { return; }
+			if (IsInvalidRuntime(null)) { return; }
+
+			object[] param = new object[2];
+			param[0] = identifier;
+            param[1] = pushToken;
+
+			if (pubSdkWrapper != null)
+				pubSdkWrapper.Call("setPushToken", param);
+		}
+
+		public static void SetPushConfig(string identifier,
+										 PubPushConfig pushConfig)
+		{
+			if (!Application.isPlaying) { return; }
+			if (IsInvalidRuntime(null)) { return; }
+
+			object[] param = new object[4];
+			param[0] = identifier;
+			param[1] = pushConfig.AgreedPush;
+			param[2] = pushConfig.AgreedNightPush;
+			param[3] = pushConfig.AgreedAdPush;
+
+			if (pubSdkWrapper != null)
+				pubSdkWrapper.Call("setPushConfig", param);
+		}
+
+		public static void Logout(string identifier)
         {
             if (!Application.isPlaying) { return; }
             if (IsInvalidRuntime(null)) { return; }
@@ -67,10 +97,34 @@ namespace GamePub.PubSDK
 			param[0] = identifier;
 
 			if (pubSdkWrapper != null)
-                pubSdkWrapper.Call("logout");
-        }        
+                pubSdkWrapper.Call("logout", param);
+        }
 
-        public static void InitBilling(string identifier)
+        public static void Withdraw(string identifier)
+        {
+            if (!Application.isPlaying) { return; }
+            if (IsInvalidRuntime(null)) { return; }
+
+			object[] param = new object[1];
+			param[0] = identifier;
+
+			if (pubSdkWrapper != null)
+				pubSdkWrapper.Call("withdraw", param);
+		}
+
+		public static void RestoreWithdrawal(string identifier)
+		{
+			if (!Application.isPlaying) { return; }
+			if (IsInvalidRuntime(null)) { return; }
+
+			object[] param = new object[1];
+			param[0] = identifier;
+
+			if (pubSdkWrapper != null)
+				pubSdkWrapper.Call("restoreWithdrawal", param);
+		}
+
+		public static void InitBilling(string identifier)
         {
             if (!Application.isPlaying) { return; }
             if (IsInvalidRuntime(identifier)) { return; }
@@ -106,6 +160,18 @@ namespace GamePub.PubSDK
 
 			if (pubSdkWrapper != null)
 				pubSdkWrapper.Call("restorePurchase", param);
+		}
+
+		public static void RestoreRefund(string identifier)
+		{
+			if (!Application.isPlaying) { return; }
+			if (IsInvalidRuntime(identifier)) { return; }
+
+			object[] param = new object[1];
+			param[0] = identifier;
+
+			if (pubSdkWrapper != null)
+				pubSdkWrapper.Call("restoreRefund", param);
 		}
 
 		public static void OpenTerms(string identifier)

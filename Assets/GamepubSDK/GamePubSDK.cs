@@ -56,12 +56,34 @@ namespace GamePub.PubSDK
 			GamePubAPI.AutoLogin(action);
 		}
 
+		public void SetPushToken(string pushToken, 
+                                Action<Result<PubUnit>> action)
+		{
+			GamePubAPI.SetPushToken(pushToken, action);
+		}
+
+		public void SetPushConfig(PubPushConfig pushConfig,
+                                  Action<Result<PubUnit>> action)
+		{
+			GamePubAPI.SetPushConfig(pushConfig, action);
+		}
+
 		public void Logout(Action<Result<PubUnit>> action)
         {            
             GamePubAPI.Logout(action);            
         }
 
-        public void InitBilling(Action<Result<PubInAppListResult>> action)
+		public void Withdraw(Action<Result<PubUnit>> action)
+		{
+			GamePubAPI.Withdraw(action);
+		}
+
+		public void RestoreWithdrawal(Action<Result<PubUnit>> action)
+		{
+			GamePubAPI.RestoreWithdrawal(action);
+		}
+
+		public void InitBilling(Action<Result<PubInAppListResult>> action)
         {
             GamePubAPI.InitBilling(action);
         }
@@ -75,6 +97,11 @@ namespace GamePub.PubSDK
 		public void RestorePurchase(Action<Result<PubPurchaseResult>> action)
 		{
 			GamePubAPI.RestorePurchase(action);
+		}
+
+		public void RestoreRefund(Action<Result<PubUnit>> action)
+		{
+			GamePubAPI.RestoreRefund(action);
 		}
 
 		public void OpenTerms(Action<Result<PubTermsResult>> action)

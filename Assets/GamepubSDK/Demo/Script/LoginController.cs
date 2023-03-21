@@ -79,9 +79,100 @@ public class LoginController : MonoBehaviour
 		});
 	}
 
-	public void Logout()
+	public void LinkAccount(string loginType)
+	{
+		PubLoginType pubLoginType = 0;
+		switch (loginType)
+		{
+			case "google":
+				pubLoginType = PubLoginType.GOOGLE;
+				break;
+			case "facebook":
+				pubLoginType = PubLoginType.FACEBOOK;
+				break;
+			case "apple":
+				pubLoginType = PubLoginType.APPLE;
+				break;
+			default:
+				Debug.Log("Wrong login type input");
+				break;
+		}
+
+		GamePubSDK.Ins.Login(
+			pubLoginType,
+			PubAccountServiceType.ACCOUNT_LINK,
+			result => {
+				result.Match(
+					value => {
+						Debug.Log(JsonUtility.ToJson(value));
+					},
+					error => {
+						Debug.Log(JsonUtility.ToJson(error));
+					});
+			});
+	}
+
+	public void SetPushToken()
+	{
+		string pushToken = "samplePushTokenUnity1jk234bg235jy23jk";
+		GamePubSDK.Ins.SetPushToken(pushToken, result => {
+			result.Match(
+				value => {
+					Debug.Log(JsonUtility.ToJson(value));
+				},
+				error => {
+					Debug.Log(JsonUtility.ToJson(error));
+				});
+		});
+	}
+
+	public void SetPushConfig()
+	{
+		PubPushConfig pushConfig = new PubPushConfig();
+		pushConfig.AgreedPush = true;
+		pushConfig.AgreedNightPush = true;
+		pushConfig.AgreedAdPush = true;
+
+		GamePubSDK.Ins.SetPushConfig(pushConfig, result => {
+			result.Match(
+				value => {
+					Debug.Log(JsonUtility.ToJson(value));
+				},
+				error => {
+					Debug.Log(JsonUtility.ToJson(error));
+				});
+		});
+	}
+
+	public void GoogleLogout()
 	{
 		GamePubSDK.Ins.Logout(result => {
+			result.Match(
+				value => {
+					Debug.Log(JsonUtility.ToJson(value));
+				},
+				error => {
+					Debug.Log(JsonUtility.ToJson(error));
+				});
+		});
+	}
+
+	public void Withdraw()
+	{
+		GamePubSDK.Ins.Withdraw(result => {
+			result.Match(
+				value => {
+					Debug.Log(JsonUtility.ToJson(value));
+				},
+				error => {
+					Debug.Log(JsonUtility.ToJson(error));
+				});
+		});
+	}
+
+	public void RestoreWithdrawal()
+	{
+		GamePubSDK.Ins.Withdraw(result => {
 			result.Match(
 				value => {
 					Debug.Log(JsonUtility.ToJson(value));
@@ -121,6 +212,19 @@ public class LoginController : MonoBehaviour
 	public void RestorePurchase()
 	{
 		GamePubSDK.Ins.RestorePurchase(result => {
+			result.Match(
+				value => {
+					Debug.Log(JsonUtility.ToJson(value));
+				},
+				error => {
+					Debug.Log(JsonUtility.ToJson(error));
+				});
+		});
+	}
+
+	public void RestoreRefund()
+	{
+		GamePubSDK.Ins.RestoreRefund(result => {
 			result.Match(
 				value => {
 					Debug.Log(JsonUtility.ToJson(value));

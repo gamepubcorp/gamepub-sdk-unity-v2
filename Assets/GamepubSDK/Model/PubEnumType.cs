@@ -5,8 +5,8 @@ namespace GamePub.PubSDK
     {        
         GOOGLE,
         FACEBOOK,
-        GUEST,
-        APPLE,
+		APPLE,
+		GUEST,
     }
 
     public enum PubAccountServiceType
