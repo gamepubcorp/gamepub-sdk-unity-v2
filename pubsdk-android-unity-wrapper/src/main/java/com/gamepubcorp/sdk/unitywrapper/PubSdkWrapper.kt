@@ -9,8 +9,9 @@ import com.google.gson.Gson
 import com.unity3d.player.UnityPlayer
 import io.github.gamepubcorp.PubCallback
 import io.github.gamepubcorp.cs.PubTermsResult
+import io.github.gamepubcorp.data.PubSetupResult
 import io.github.gamepubcorp.data.PubUnit
-import io.github.gamepubcorp.iap.PubInAppListResult
+import io.github.gamepubcorp.iap.PubInitBillingResult
 import io.github.gamepubcorp.iap.PubPurchaseResult
 
 class PubSdkWrapper {
@@ -26,7 +27,7 @@ class PubSdkWrapper {
         Log.d(TAG, "setup sdk: $projectId")
 
         pubApiClient = PubApiClientBuilder(currentActivity, projectId.toInt()).build()
-        pubApiClient.setupSDK(PubCallback<PubUnit>().apply {
+        pubApiClient.setupSDK(PubCallback<PubSetupResult>().apply {
             success = { res ->
                 val result = gson.toJson(res)
                 CallbackMessageForUnity(identifier, result).sendMessageOk()
@@ -91,23 +92,11 @@ class PubSdkWrapper {
         })
     }
 
-    fun restoreWithdrawal(identifier: String) {
-        pubApiClient.restoreWithdrawal(PubCallback<PubUnit>().apply {
-            success = { res ->
-                val result = gson.toJson(res)
-                CallbackMessageForUnity(identifier, result).sendMessageOk()
-            }
-            error = { err ->
-                sendMessageError(identifier, err)
-            }
-        })
-    }
-
     fun initBilling(identifier: String) {
         val currentActivity = UnityPlayer.currentActivity
 
         pubApiClient.initBilling(currentActivity,
-            PubCallback<PubInAppListResult>().apply {
+            PubCallback<PubInitBillingResult>().apply {
                 success = { res ->
                     val result = gson.toJson(res)
                     CallbackMessageForUnity(identifier, result).sendMessageOk()
@@ -137,10 +126,10 @@ class PubSdkWrapper {
         )
     }
 
-    fun restorePurchase(identifier: String) {
+    fun retryPurchase(identifier: String) {
         val currentActivity = UnityPlayer.currentActivity
 
-        pubApiClient.restorePurchase(currentActivity,
+        pubApiClient.retryPurchase(currentActivity,
             PubCallback<PubPurchaseResult>().apply {
             success = { res ->
                 val result = gson.toJson(res)

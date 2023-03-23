@@ -14,11 +14,10 @@ data class UserProfile(
         fun convertPubProfile(profile: PubProfile): UserProfile =
             UserProfile(
                 profile.loginType.toString(),
-                profile.socialId ?: "",
-                profile.displayName ?: "",
-                profile.photoURL ?: "",
-                profile.email ?: ""
+                profile.socialId,
+                profile.name,
+                profile.profileUrl,
+                profile.email
             )
-
     }
 }
