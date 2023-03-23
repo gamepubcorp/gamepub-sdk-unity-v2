@@ -34,7 +34,7 @@ namespace GamePub.PubSDK
             }            
         }        
 
-        public void SetupSDK(Action<Result<PubUnit>> action)
+        public void SetupSDK(Action<Result<PubSetupResult>> action)
         {           
             if (string.IsNullOrEmpty(GamePubSDKSettings.ProjectId))
             {
@@ -78,12 +78,7 @@ namespace GamePub.PubSDK
 			GamePubAPI.Withdraw(action);
 		}
 
-		public void RestoreWithdrawal(Action<Result<PubUnit>> action)
-		{
-			GamePubAPI.RestoreWithdrawal(action);
-		}
-
-		public void InitBilling(Action<Result<PubInAppListResult>> action)
+		public void InitBilling(Action<Result<PubInitBillingResult>> action)
         {
             GamePubAPI.InitBilling(action);
         }
@@ -94,9 +89,9 @@ namespace GamePub.PubSDK
             GamePubAPI.InAppPurchase(pid, action);
         }
 
-		public void RestorePurchase(Action<Result<PubPurchaseResult>> action)
+		public void RetryPurchase(Action<Result<PubPurchaseResult>> action)
 		{
-			GamePubAPI.RestorePurchase(action);
+			GamePubAPI.RetryPurchase(action);
 		}
 
 		public void RestoreRefund(Action<Result<PubUnit>> action)
@@ -116,13 +111,13 @@ namespace GamePub.PubSDK
 
 		public void OnApiOk(string result)
         {
-            result.SuccessLog();            
+            //result.SuccessLog();            
             GamePubAPI._OnApiOk(result);
         }
 
         public void OnApiError(string result)
         {
-            result.ErrorLog();
+            //result.ErrorLog();
             GamePubAPI._OnApiError(result);
         }        
     }

@@ -10,9 +10,9 @@ namespace GamePub.PubSDK
             new Dictionary<string, FlattenAction>();
 
         public static void SetupSDK(string projectId,
-                                    Action<Result<PubUnit>> action)
+                                    Action<Result<PubSetupResult>> action)
         {
-            var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
+            var identifier = AddAction(FlattenAction.JsonFlatten<PubSetupResult>(action));
             NativeInterface.SetupSDK(identifier, projectId);
         }
 
@@ -27,7 +27,6 @@ namespace GamePub.PubSDK
         public static void AutoLogin(Action<Result<PubUnit>> action)
         {
 			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
-
 			NativeInterface.AutoLogin(identifier);
 		}
 
@@ -57,15 +56,9 @@ namespace GamePub.PubSDK
 			NativeInterface.Withdraw(identifier);
 		}
 
-		public static void RestoreWithdrawal(Action<Result<PubUnit>> action)
-		{
-			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
-			NativeInterface.RestoreWithdrawal(identifier);
-		}
-
-		public static void InitBilling(Action<Result<PubInAppListResult>> action)
+		public static void InitBilling(Action<Result<PubInitBillingResult>> action)
         {
-            var identifier = AddAction(FlattenAction.JsonFlatten<PubInAppListResult>(action));
+            var identifier = AddAction(FlattenAction.JsonFlatten<PubInitBillingResult>(action));
             NativeInterface.InitBilling(identifier);
         }
 
@@ -76,10 +69,10 @@ namespace GamePub.PubSDK
             NativeInterface.InAppPurchase(identifier, pid);
         }
 
-		public static void RestorePurchase(Action<Result<PubPurchaseResult>> action)
+		public static void RetryPurchase(Action<Result<PubPurchaseResult>> action)
 		{
 			var identifier = AddAction(FlattenAction.JsonFlatten<PubPurchaseResult>(action));
-			NativeInterface.RestorePurchase(identifier);
+			NativeInterface.RetryPurchase(identifier);
 		}
 
 		public static void RestoreRefund(Action<Result<PubUnit>> action)

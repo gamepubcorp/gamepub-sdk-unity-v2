@@ -170,29 +170,18 @@ public class LoginController : MonoBehaviour
 		});
 	}
 
-	public void RestoreWithdrawal()
-	{
-		GamePubSDK.Ins.Withdraw(result => {
-			result.Match(
-				value => {
-					Debug.Log(JsonUtility.ToJson(value));
-				},
-				error => {
-					Debug.Log(JsonUtility.ToJson(error));
-				});
-		});
-	}
-
 	public void Purchase(int productNum)
 	{
 		string productId = "";
 		switch (productNum)
 		{
 			case 1:
-				productId = "com.gamepub.test1000";
+				productId = "gamepub_1000";
+				//productId = "com.gamepub.test1000";
 				break;
 			case 2:
-				productId = "com.gamepub.test2000";
+				productId = "gamepub_2000";
+				//productId = "com.gamepub.test2000";
 				break;
 			default:
 				Debug.Log("wrong product number input");
@@ -209,9 +198,9 @@ public class LoginController : MonoBehaviour
 		});
 	}
 
-	public void RestorePurchase()
+	public void RetryPurchase()
 	{
-		GamePubSDK.Ins.RestorePurchase(result => {
+		GamePubSDK.Ins.RetryPurchase(result => {
 			result.Match(
 				value => {
 					Debug.Log(JsonUtility.ToJson(value));
