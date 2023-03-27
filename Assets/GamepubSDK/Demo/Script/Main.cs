@@ -84,7 +84,7 @@ namespace GamepubSDK.Examples
                                   {
                                       Debug.Log("InAppPurchase");
 
-                                      GamePubSDK.Ins.InAppPurchase("gamepub_1000", result =>
+                                      GamePubSDK.Ins.Purchase("gamepub_1000", "", "", result =>
                                       {
                                           result.Match(
                                               value =>

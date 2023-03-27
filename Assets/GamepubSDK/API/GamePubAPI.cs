@@ -62,17 +62,21 @@ namespace GamePub.PubSDK
             NativeInterface.InitBilling(identifier);
         }
 
-        public static void InAppPurchase(string pid,                                         
-                                         Action<Result<PubPurchaseResult>> action)
+        public static void Purchase(string productId,
+                                    string channelId,
+                                    string characterId,
+                                    Action<Result<PubPurchaseResult>> action)
         {
             var identifier = AddAction(FlattenAction.JsonFlatten<PubPurchaseResult>(action));
-            NativeInterface.InAppPurchase(identifier, pid);
+            NativeInterface.Purchase(identifier, productId, channelId, characterId);
         }
 
-		public static void RetryPurchase(Action<Result<PubPurchaseResult>> action)
+		public static void RetryPurchase(string channelId,
+                                         string characterId,
+                                         Action<Result<PubRetryPurchaseResult>> action)
 		{
-			var identifier = AddAction(FlattenAction.JsonFlatten<PubPurchaseResult>(action));
-			NativeInterface.RetryPurchase(identifier);
+			var identifier = AddAction(FlattenAction.JsonFlatten<PubRetryPurchaseResult>(action));
+			NativeInterface.RetryPurchase(identifier, channelId, characterId);
 		}
 
 		public static void RestoreRefund(Action<Result<PubUnit>> action)

@@ -2,7 +2,7 @@
 
 allprojects {
     buildscript {
-        ext.staging_num = '1143'
+        ext.staging_num = '1146'
 
         repositories {**ARTIFACTORYREPOSITORY**
             google()

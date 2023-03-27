@@ -9,6 +9,6 @@ namespace GamePub.PubSDK
         [SerializeField]
         private PubInAppProduct[] productList = null;
 
-        public PubInAppProduct[] InAppProducts { get { return productList; } }
+        public PubInAppProduct[] ProductList { get { return productList; } }
     }
 }

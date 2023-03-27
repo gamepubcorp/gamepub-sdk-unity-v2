@@ -699,7 +699,7 @@ MonoBehaviour:
       - m_Target: {fileID: 1578747830}
         m_TargetAssemblyTypeName: LoginController, Assembly-CSharp
         m_MethodName: Purchase
-        m_Mode: 3
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2562,7 +2562,7 @@ GameObject:
   - component: {fileID: 1065072989}
   - component: {fileID: 1065072988}
   m_Layer: 5
-  m_Name: Text
+  m_Name: PurchaseBtnText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2620,7 +2620,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uACB0\uC81C \uC0C1\uD488 1000\uC6D0"
+  m_Text: "\uACB0\uC81C \uC0C1\uD488 1"
 --- !u!222 &1065072989
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3497,6 +3497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616e0437bba08483d9163bcaa00c882e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  purchaseBtnText: {fileID: 1065072988}
 --- !u!4 &1578747831
 Transform:
   m_ObjectHideFlags: 0

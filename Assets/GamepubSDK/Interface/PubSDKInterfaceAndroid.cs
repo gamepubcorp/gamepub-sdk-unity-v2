@@ -124,27 +124,35 @@ namespace GamePub.PubSDK
                 pubSdkWrapper.Call("initBilling", param);
         }
         
-        public static void InAppPurchase(string identifier,
-                                         string pid)
+        public static void Purchase(string identifier,
+                                         string productId, 
+										 string channelId, 
+										 string characterId)
         {
             if (!Application.isPlaying) { return; }
             if (IsInvalidRuntime(identifier)) { return; }
 
-            object[] param = new object[2];
+            object[] param = new object[4];
             param[0] = identifier;
-            param[1] = pid;            
+            param[1] = productId;
+			param[2] = channelId;
+			param[3] = characterId;
 
             if (pubSdkWrapper != null)
-                pubSdkWrapper.Call("purchaseLaunch", param);
+                pubSdkWrapper.Call("purchase", param);
         }
 
-		public static void RetryPurchase(string identifier)
+		public static void RetryPurchase(string identifier,
+										 string channelId,
+										 string characterId)
 		{
 			if (!Application.isPlaying) { return; }
 			if (IsInvalidRuntime(identifier)) { return; }
 
-			object[] param = new object[1];
+			object[] param = new object[3];
 			param[0] = identifier;
+			param[1] = channelId;
+			param[2] = characterId;
 
 			if (pubSdkWrapper != null)
 				pubSdkWrapper.Call("retryPurchase", param);

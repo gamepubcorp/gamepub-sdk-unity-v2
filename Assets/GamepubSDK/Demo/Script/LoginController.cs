@@ -1,8 +1,12 @@
 using UnityEngine;
+using UnityEngine.UI;
 using GamePub.PubSDK;
 
 public class LoginController : MonoBehaviour
 {
+	public Text purchaseBtnText;
+	int count = 1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -170,37 +174,48 @@ public class LoginController : MonoBehaviour
 		});
 	}
 
-	public void Purchase(int productNum)
+	public void Purchase()
 	{
-		string productId = "";
-		switch (productNum)
-		{
-			case 1:
-				productId = "gamepub_1000";
-				//productId = "com.gamepub.test1000";
-				break;
-			case 2:
-				productId = "gamepub_2000";
-				//productId = "com.gamepub.test2000";
-				break;
-			default:
-				Debug.Log("wrong product number input");
-				return;
-		}
-		GamePubSDK.Ins.InAppPurchase(productId, result => {
+		string productId = "pubsdk_"+count+"000";
+		//string productId = "com.gamepub.test"+count+"000";
+
+		string channelId = "unityTestChannelId";
+		string characterId = "unityTestCharacterId";
+
+		GamePubSDK.Ins.Purchase(productId, channelId, characterId, result => {
 			result.Match(
 				value => {
 					Debug.Log(JsonUtility.ToJson(value));
 				},
 				error => {
 					Debug.Log(JsonUtility.ToJson(error));
+					if (error.Message == "테스트용 결제 장애")
+					{
+						count++;
+						if (productId.Contains("pubsdk_") && count == 4)
+						{
+							count = 5;
+						}
+						if (productId.Contains("pubsdk_") && count == 12)
+						{
+							count = 1;
+						}
+						if (productId.Contains("com.gamepub.test") && count == 11)
+						{
+							count = 1;
+						}
+						purchaseBtnText.text = "결제 상품 "+count;
+					}
 				});
 		});
 	}
 
 	public void RetryPurchase()
 	{
-		GamePubSDK.Ins.RetryPurchase(result => {
+		string channelId = "unityTestChannelId";
+		string characterId = "unityTestCharacterId";
+
+		GamePubSDK.Ins.RetryPurchase(channelId, characterId, result => {
 			result.Match(
 				value => {
 					Debug.Log(JsonUtility.ToJson(value));
@@ -209,6 +224,8 @@ public class LoginController : MonoBehaviour
 					Debug.Log(JsonUtility.ToJson(error));
 				});
 		});
+		count = 1;
+		purchaseBtnText.text = "결제 상품 "+count;
 	}
 
 	public void RestoreRefund()

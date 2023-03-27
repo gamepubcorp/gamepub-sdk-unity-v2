@@ -83,15 +83,19 @@ namespace GamePub.PubSDK
             GamePubAPI.InitBilling(action);
         }
 
-        public void InAppPurchase(string pid,                                  
-                                  Action<Result<PubPurchaseResult>> action)
+        public void Purchase(string productId,
+                             string channelId,
+                             string characterId,
+                             Action<Result<PubPurchaseResult>> action)
         {
-            GamePubAPI.InAppPurchase(pid, action);
+            GamePubAPI.Purchase(productId, channelId, characterId, action);
         }
 
-		public void RetryPurchase(Action<Result<PubPurchaseResult>> action)
+		public void RetryPurchase(string channelId,
+                                  string characterId,
+                                  Action<Result<PubRetryPurchaseResult>> action)
 		{
-			GamePubAPI.RetryPurchase(action);
+			GamePubAPI.RetryPurchase(channelId, characterId, action);
 		}
 
 		public void RestoreRefund(Action<Result<PubUnit>> action)
