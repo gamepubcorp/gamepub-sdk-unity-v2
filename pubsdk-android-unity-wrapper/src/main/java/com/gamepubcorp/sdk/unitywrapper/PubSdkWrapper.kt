@@ -13,6 +13,7 @@ import io.github.gamepubcorp.data.PubSetupResult
 import io.github.gamepubcorp.data.PubUnit
 import io.github.gamepubcorp.iap.PubInitBillingResult
 import io.github.gamepubcorp.iap.PubPurchaseResult
+import io.github.gamepubcorp.iap.PubRetryPurchaseResult
 
 class PubSdkWrapper {
 
@@ -108,12 +109,18 @@ class PubSdkWrapper {
         )
     }
 
-    fun purchaseLaunch(identifier: String,
-                       pid: String)
+    fun purchase(identifier: String,
+                 productId: String,
+                 channelId: String,
+                 characterId: String)
     {
         val currentActivity = UnityPlayer.currentActivity
 
-        pubApiClient.purchase(currentActivity, pid, "", "",
+        pubApiClient.purchase(
+            currentActivity,
+            productId,
+            channelId,
+            characterId,
             PubCallback<PubPurchaseResult>().apply {
                 success = { res ->
                     val result = gson.toJson(res)
@@ -126,11 +133,17 @@ class PubSdkWrapper {
         )
     }
 
-    fun retryPurchase(identifier: String) {
+    fun retryPurchase(identifier: String,
+                      channelId: String,
+                      characterId: String)
+    {
         val currentActivity = UnityPlayer.currentActivity
 
-        pubApiClient.retryPurchase(currentActivity,
-            PubCallback<PubPurchaseResult>().apply {
+        pubApiClient.retryPurchase(
+            currentActivity,
+            channelId,
+            characterId,
+            PubCallback<PubRetryPurchaseResult>().apply {
             success = { res ->
                 val result = gson.toJson(res)
                 CallbackMessageForUnity(identifier, result).sendMessageOk()
