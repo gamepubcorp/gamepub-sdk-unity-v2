@@ -11,7 +11,17 @@ public class LoginController : MonoBehaviour
     void Start()
     {
         SetupSDKandInitBilling();
-    }
+
+		//get Ad-ID
+		string adId = "";
+		AndroidJavaClass up = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+		AndroidJavaObject currentActivity = up.GetStatic<AndroidJavaObject>("currentActivity");
+		AndroidJavaClass client = new AndroidJavaClass("com.google.android.gms.ads.identifier.AdvertisingIdClient");
+		AndroidJavaObject adInfo = client.CallStatic<AndroidJavaObject>("getAdvertisingIdInfo", currentActivity);
+
+		adId = adInfo.Call<string>("getId").ToString();
+		Debug.Log("Ad-ID: "+adId);
+	}
     
     public void SetupSDKandInitBilling()
     {
