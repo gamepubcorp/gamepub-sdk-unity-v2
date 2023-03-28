@@ -175,7 +175,29 @@ class PubSdkWrapper {
     fun openImageBanner(identifier: String) {
         val currentActivity = UnityPlayer.currentActivity
 
-        pubApiClient.openImageBanner(currentActivity)
+        pubApiClient.openImageBanner(currentActivity, PubCallback<PubUnit>().apply {
+            success = { res ->
+                val result = gson.toJson(res)
+                CallbackMessageForUnity(identifier, result).sendMessageOk()
+            }
+            error = { err ->
+                sendMessageError(identifier, err)
+            }
+        })
+    }
+
+    fun openCustomerCenter(identifier: String) {
+        val currentActivity = UnityPlayer.currentActivity
+
+        pubApiClient.openCustomerCenter(currentActivity, PubCallback<PubUnit>().apply {
+            success = { res ->
+                val result = gson.toJson(res)
+                CallbackMessageForUnity(identifier, result).sendMessageOk()
+            }
+            error = { err ->
+                sendMessageError(identifier, err)
+            }
+        })
     }
 
     fun setPushToken(identifier: String,
@@ -194,13 +216,11 @@ class PubSdkWrapper {
 
     fun setPushConfig(identifier: String,
                       agreedPush: Boolean,
-                      agreedNightPush: Boolean,
-                      agreedAdPush: Boolean)
+                      agreedNightPush: Boolean)
     {
         pubApiClient.setPushConfig(
             agreedPush,
             agreedNightPush,
-            agreedAdPush,
             PubCallback<PubUnit>().apply {
                 success = { res ->
                     val result = gson.toJson(res)
