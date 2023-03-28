@@ -26,12 +26,12 @@ public class LoginController : MonoBehaviour
 								Debug.Log(JsonUtility.ToJson(value));
 							},
 							error => {
-								Debug.Log(JsonUtility.ToJson(error));
+								Debug.Log("InitBilling: "+error.Code.ToString()+" "+error.Message);
 							});
 					});
 				},
 				error => {
-					Debug.Log(JsonUtility.ToJson(error));
+					Debug.Log("Setup: " + error.Code.ToString() + " " + error.Message);
 				});
 		});
     }
@@ -66,7 +66,7 @@ public class LoginController : MonoBehaviour
 						Debug.Log(JsonUtility.ToJson(value));
 					},
 					error => {
-						Debug.Log(JsonUtility.ToJson(error));
+						Debug.Log("Login: " + error.Code.ToString() + " " + error.Message);
 					});
 			});
 	}
@@ -75,10 +75,10 @@ public class LoginController : MonoBehaviour
 		GamePubSDK.Ins.AutoLogin(result => {
 			result.Match(
 				value => {
-					Debug.Log(JsonUtility.ToJson(value));
+					Debug.Log("AutoLogin: " + value.Code.ToString() + " " + value.Msg);
 				},
 				error => {
-					Debug.Log(JsonUtility.ToJson(error));
+					Debug.Log("AutoLogin: " + error.Code.ToString() + " " + error.Message);
 				});
 		});
 	}
@@ -111,7 +111,7 @@ public class LoginController : MonoBehaviour
 						Debug.Log(JsonUtility.ToJson(value));
 					},
 					error => {
-						Debug.Log(JsonUtility.ToJson(error));
+						Debug.Log("LinkAccount: " + error.Code.ToString() + " " + error.Message);
 					});
 			});
 	}
@@ -122,10 +122,10 @@ public class LoginController : MonoBehaviour
 		GamePubSDK.Ins.SetPushToken(pushToken, result => {
 			result.Match(
 				value => {
-					Debug.Log(JsonUtility.ToJson(value));
+					Debug.Log("SetPushToken: " + value.Code.ToString() + " " + value.Msg);
 				},
 				error => {
-					Debug.Log(JsonUtility.ToJson(error));
+					Debug.Log("SetPushToken: " + error.Code.ToString() + " " + error.Message);
 				});
 		});
 	}
@@ -133,30 +133,29 @@ public class LoginController : MonoBehaviour
 	public void SetPushConfig()
 	{
 		PubPushConfig pushConfig = new PubPushConfig();
-		pushConfig.AgreedPush = false;
-		pushConfig.AgreedNightPush = true;
-		pushConfig.AgreedAdPush = true;
+		pushConfig.AgreedPush = true;
+		pushConfig.AgreedNightPush = false;
 
 		GamePubSDK.Ins.SetPushConfig(pushConfig, result => {
 			result.Match(
 				value => {
-					Debug.Log(JsonUtility.ToJson(value));
+					Debug.Log("SetPushConfig: " + value.Code.ToString() + " " + value.Msg);
 				},
 				error => {
-					Debug.Log(JsonUtility.ToJson(error));
+					Debug.Log("SetPushConfig: " + error.Code.ToString() + " " + error.Message);
 				});
 		});
 	}
 
-	public void GoogleLogout()
+	public void Logout()
 	{
 		GamePubSDK.Ins.Logout(result => {
 			result.Match(
 				value => {
-					Debug.Log(JsonUtility.ToJson(value));
+					Debug.Log("Logout: " + value.Code.ToString() + " " + value.Msg);
 				},
 				error => {
-					Debug.Log(JsonUtility.ToJson(error));
+					Debug.Log("Logout: " + error.Code.ToString() + " " + error.Message);
 				});
 		});
 	}
@@ -166,10 +165,10 @@ public class LoginController : MonoBehaviour
 		GamePubSDK.Ins.Withdraw(result => {
 			result.Match(
 				value => {
-					Debug.Log(JsonUtility.ToJson(value));
+					Debug.Log("Withdraw: " + value.Code.ToString() + " " + value.Msg);
 				},
 				error => {
-					Debug.Log(JsonUtility.ToJson(error));
+					Debug.Log("Withdraw: " + error.Code.ToString() + " " + error.Message);
 				});
 		});
 	}
@@ -188,7 +187,7 @@ public class LoginController : MonoBehaviour
 					Debug.Log(JsonUtility.ToJson(value));
 				},
 				error => {
-					Debug.Log(JsonUtility.ToJson(error));
+					Debug.Log("Purchase: " + error.Code.ToString() + " " + error.Message);
 					if (error.Message == "테스트용 결제 장애")
 					{
 						count++;
@@ -221,7 +220,7 @@ public class LoginController : MonoBehaviour
 					Debug.Log(JsonUtility.ToJson(value));
 				},
 				error => {
-					Debug.Log(JsonUtility.ToJson(error));
+					Debug.Log("RetryPurchase: " + error.Code.ToString() + " " + error.Message);
 				});
 		});
 		count = 1;
@@ -236,7 +235,7 @@ public class LoginController : MonoBehaviour
 					Debug.Log(JsonUtility.ToJson(value));
 				},
 				error => {
-					Debug.Log(JsonUtility.ToJson(error));
+					Debug.Log("RestoreRefund: " + error.Code.ToString() + " " + error.Message);
 				});
 		});
 	}
@@ -249,7 +248,7 @@ public class LoginController : MonoBehaviour
 					Debug.Log(JsonUtility.ToJson(value));
 				},
 				error => {
-					Debug.Log(JsonUtility.ToJson(error));
+					Debug.Log("Terms: " + error.Code.ToString() + " " + error.Message);
 				});
 		});
 	}
@@ -259,10 +258,23 @@ public class LoginController : MonoBehaviour
 		GamePubSDK.Ins.OpenImageBanner(result => {
 			result.Match(
 				value => {
-					Debug.Log(JsonUtility.ToJson(value));
+					Debug.Log("Banner: " + value.Code.ToString() + " " + value.Msg);
 				},
 				error => {
-					Debug.Log(JsonUtility.ToJson(error));
+					Debug.Log("Banner: " + error.Code.ToString() + " " + error.Message);
+				});
+		});
+	}
+
+	public void OpenCustomerCenter()
+	{
+		GamePubSDK.Ins.OpenCustomerCenter(result => {
+			result.Match(
+				value => {
+					Debug.Log("Customer: " + value.Code.ToString() + " " + value.Msg);
+				},
+				error => {
+					Debug.Log("Customer: " + error.Code.ToString() + " " + error.Message);
 				});
 		});
 	}

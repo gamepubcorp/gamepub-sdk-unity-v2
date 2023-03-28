@@ -78,11 +78,10 @@ namespace GamePub.PubSDK
 			if (!Application.isPlaying) { return; }
 			if (IsInvalidRuntime(null)) { return; }
 
-			object[] param = new object[4];
+			object[] param = new object[3];
 			param[0] = identifier;
 			param[1] = pushConfig.AgreedPush;
 			param[2] = pushConfig.AgreedNightPush;
-			param[3] = pushConfig.AgreedAdPush;
 
 			if (pubSdkWrapper != null)
 				pubSdkWrapper.Call("setPushConfig", param);
@@ -125,9 +124,9 @@ namespace GamePub.PubSDK
         }
         
         public static void Purchase(string identifier,
-                                         string productId, 
-										 string channelId, 
-										 string characterId)
+                                    string productId, 
+									string channelId, 
+									string characterId)
         {
             if (!Application.isPlaying) { return; }
             if (IsInvalidRuntime(identifier)) { return; }
@@ -192,6 +191,18 @@ namespace GamePub.PubSDK
 
 			if (pubSdkWrapper != null)
 				pubSdkWrapper.Call("openImageBanner", param);
+		}
+
+		public static void OpenCustomerCenter(string identifier)
+		{
+			if (!Application.isPlaying) { return; }
+			if (IsInvalidRuntime(identifier)) { return; }
+
+			object[] param = new object[1];
+			param[0] = identifier;
+
+			if (pubSdkWrapper != null)
+				pubSdkWrapper.Call("openCustomerCenter", param);
 		}
 
 		private static bool IsInvalidRuntime(string identifier)

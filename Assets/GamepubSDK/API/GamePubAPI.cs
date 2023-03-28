@@ -97,6 +97,12 @@ namespace GamePub.PubSDK
 			NativeInterface.OpenImageBanner(identifier);
 		}
 
+		public static void OpenCustomerCenter(Action<Result<PubUnit>> action)
+		{
+			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
+			NativeInterface.OpenCustomerCenter(identifier);
+		}
+
 		static string AddAction(FlattenAction action)
         {
             var identifier = Guid.NewGuid().ToString();

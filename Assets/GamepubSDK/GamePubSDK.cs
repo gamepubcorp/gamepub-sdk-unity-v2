@@ -113,6 +113,11 @@ namespace GamePub.PubSDK
 			GamePubAPI.OpenImageBanner(action);
 		}
 
+		public void OpenCustomerCenter(Action<Result<PubUnit>> action)
+		{
+			GamePubAPI.OpenCustomerCenter(action);
+		}
+
 		public void OnApiOk(string result)
         {
             //result.SuccessLog();            
