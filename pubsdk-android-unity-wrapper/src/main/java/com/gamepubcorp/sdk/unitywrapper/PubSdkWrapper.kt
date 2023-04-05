@@ -8,12 +8,12 @@ import com.gamepubcorp.sdk.unitywrapper.util.Log
 import com.google.gson.Gson
 import com.unity3d.player.UnityPlayer
 import io.github.gamepubcorp.PubCallback
-import io.github.gamepubcorp.cs.PubTermsResult
+import io.github.gamepubcorp.customer.PubTermsResult
 import io.github.gamepubcorp.data.PubSetupResult
 import io.github.gamepubcorp.data.PubUnit
 import io.github.gamepubcorp.iap.PubInitBillingResult
 import io.github.gamepubcorp.iap.PubPurchaseResult
-import io.github.gamepubcorp.iap.PubRetryPurchaseResult
+import io.github.gamepubcorp.iap.PubPurchaseResultList
 
 class PubSdkWrapper {
 
@@ -22,8 +22,7 @@ class PubSdkWrapper {
     private val gson = Gson()
 
     fun setupSDK(identifier: String,
-                 projectId: String)
-    {
+                 projectId: String) {
         val currentActivity = UnityPlayer.currentActivity
         Log.d(TAG, "setup sdk: $projectId")
 
@@ -41,13 +40,13 @@ class PubSdkWrapper {
 
     fun login(identifier: String,
               loginType: Int,
-              accountServiceType: Int)
-    {
+              accountServiceType: Int) {
+        val currentActivity = UnityPlayer.currentActivity
+
         Log.d(TAG, "login type: $loginType")
         Log.d(TAG, "service type: $accountServiceType")
         //type check
 
-        val currentActivity = UnityPlayer.currentActivity
         PubSdkWrapperActivity.startActivity(
             currentActivity,
             identifier,
@@ -57,6 +56,7 @@ class PubSdkWrapper {
     }
 
     fun autoLogin(identifier: String) {
+
         pubApiClient.autologin(PubCallback<PubUnit>().apply {
             success = { res ->
                 val result = gson.toJson(res)
@@ -70,6 +70,7 @@ class PubSdkWrapper {
 
     fun logout(identifier: String) {
         val currentActivity = UnityPlayer.currentActivity
+
         pubApiClient.logout(currentActivity, PubCallback<PubUnit>().apply {
             success = { res ->
                 val result = gson.toJson(res)
@@ -82,6 +83,7 @@ class PubSdkWrapper {
     }
 
     fun withdraw(identifier: String) {
+
         pubApiClient.withdraw(PubCallback<PubUnit>().apply {
             success = { res ->
                 val result = gson.toJson(res)
@@ -112,8 +114,7 @@ class PubSdkWrapper {
     fun purchase(identifier: String,
                  productId: String,
                  channelId: String,
-                 characterId: String)
-    {
+                 characterId: String) {
         val currentActivity = UnityPlayer.currentActivity
 
         pubApiClient.purchase(
@@ -135,27 +136,43 @@ class PubSdkWrapper {
 
     fun retryPurchase(identifier: String,
                       channelId: String,
-                      characterId: String)
-    {
+                      characterId: String) {
         val currentActivity = UnityPlayer.currentActivity
 
         pubApiClient.retryPurchase(
             currentActivity,
             channelId,
             characterId,
-            PubCallback<PubRetryPurchaseResult>().apply {
-            success = { res ->
-                val result = gson.toJson(res)
-                CallbackMessageForUnity(identifier, result).sendMessageOk()
+            PubCallback<PubPurchaseResultList>().apply {
+                success = { res ->
+                    val result = gson.toJson(res)
+                    CallbackMessageForUnity(identifier, result).sendMessageOk()
+                }
+                error = { err ->
+                    sendMessageError(identifier, err)
+                }
             }
-            error = { err ->
-                sendMessageError(identifier, err)
-            }
-        })
+        )
     }
 
-    fun restoreRefund(identifier: String){
-
+    fun openVoided(identifier: String,
+               channelId: String,
+               characterId: String){
+        val currentActivity = UnityPlayer.currentActivity
+        //TODO: change to openVoided
+        pubApiClient.openVoided(
+            currentActivity,
+            channelId,
+            characterId, PubCallback<PubPurchaseResultList>().apply {
+                success = { res ->
+                    val result = gson.toJson(res)
+                    CallbackMessageForUnity(identifier, result).sendMessageOk()
+                }
+                error = { err ->
+                    sendMessageError(identifier, err)
+                }
+            }
+        )
     }
 
     fun openTerms(identifier: String){
@@ -201,8 +218,8 @@ class PubSdkWrapper {
     }
 
     fun setPushToken(identifier: String,
-                     pushToken: String
-    ) {
+                     pushToken: String) {
+
         pubApiClient.setPushToken(pushToken, PubCallback<PubUnit>().apply {
             success = { res ->
                 val result = gson.toJson(res)
@@ -216,8 +233,8 @@ class PubSdkWrapper {
 
     fun setPushConfig(identifier: String,
                       agreedPush: Boolean,
-                      agreedNightPush: Boolean)
-    {
+                      agreedNightPush: Boolean) {
+
         pubApiClient.setPushConfig(
             agreedPush,
             agreedNightPush,
