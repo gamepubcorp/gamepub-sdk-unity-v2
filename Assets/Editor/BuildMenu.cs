@@ -165,8 +165,27 @@ public class BuildMenu : ScriptableObject
 
         PerformiOSBuild(GetIOSOutputFile(), "", false);
     }
-    
-    static void PrepareAndroidBuild(string bundleID)
+
+	[UnityEditor.MenuItem("BuildMenu/GalaxyStore", false, 3007)]
+	static void Buildmachine_GalaxyStore()
+	{
+		string name = GetBuildStore() + GetBuildServer();
+		PlayerSettings.productName = name;
+		PrepareAndroidBuild("com.gamepub.galaxystore.sample");
+
+		PerformAndroidBuild(GetAndroidOutputFile(), "", false);
+	}
+
+	[UnityEditor.MenuItem("BuildMenu/GalaxyStore Build And Run", false, 3008)]
+	static void Buildmachine_GalaxyStoreAuto()
+	{
+		PlayerSettings.productName = "GalaxyStoreDemo";
+		PrepareAndroidBuild("com.gamepub.galaxystore.sample");
+
+		PerformAndroidBuild(GetAndroidOutputFile("GalaxyStoreDemo"), "", true);
+	}
+
+	static void PrepareAndroidBuild(string bundleID)
     {
         PlayerSettings.Android.keystoreName = "gamepub.keystore";
         PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Android, bundleID);

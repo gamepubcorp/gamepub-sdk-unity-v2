@@ -4,9 +4,6 @@ using GamePub.PubSDK;
 
 public class LoginController : MonoBehaviour
 {
-	public Text purchaseBtnText;
-	int count = 1;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -173,10 +170,10 @@ public class LoginController : MonoBehaviour
 		});
 	}
 
-	public void Purchase()
+	public void Purchase(int productNum)
 	{
-		string productId = "pubsdk_"+count+"000";
-		//string productId = "com.gamepub.test"+count+"000";
+		string productId = "pubsdk_"+productNum+"000";
+		//string productId = "com.gamepub.test"+productNum+"000";
 
 		string channelId = "unityTestChannelId";
 		string characterId = "unityTestCharacterId";
@@ -188,23 +185,6 @@ public class LoginController : MonoBehaviour
 				},
 				error => {
 					Debug.Log("Purchase: " + error.Code.ToString() + " " + error.Message);
-					if (error.Message == "테스트용 결제 장애")
-					{
-						count++;
-						if (productId.Contains("pubsdk_") && count == 4)
-						{
-							count = 5;
-						}
-						if (productId.Contains("pubsdk_") && count == 12)
-						{
-							count = 1;
-						}
-						if (productId.Contains("com.gamepub.test") && count == 11)
-						{
-							count = 1;
-						}
-						purchaseBtnText.text = "결제 상품 "+count;
-					}
 				});
 		});
 	}
@@ -223,19 +203,20 @@ public class LoginController : MonoBehaviour
 					Debug.Log("RetryPurchase: " + error.Code.ToString() + " " + error.Message);
 				});
 		});
-		count = 1;
-		purchaseBtnText.text = "결제 상품 "+count;
 	}
 
-	public void RestoreRefund()
+	public void OpenVoided()
 	{
-		GamePubSDK.Ins.RestoreRefund(result => {
+		string channelId = "unityTestChannelId";
+		string characterId = "unityTestCharacterId";
+
+		GamePubSDK.Ins.OpenVoided(channelId, characterId, result => {
 			result.Match(
 				value => {
 					Debug.Log(JsonUtility.ToJson(value));
 				},
 				error => {
-					Debug.Log("RestoreRefund: " + error.Code.ToString() + " " + error.Message);
+					Debug.Log("OpenVoided: " + error.Code.ToString() + " " + error.Message);
 				});
 		});
 	}

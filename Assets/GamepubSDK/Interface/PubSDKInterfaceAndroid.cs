@@ -157,16 +157,20 @@ namespace GamePub.PubSDK
 				pubSdkWrapper.Call("retryPurchase", param);
 		}
 
-		public static void RestoreRefund(string identifier)
+		public static void OpenVoided(string identifier,
+									  string channelId,
+									  string characterId)
 		{
 			if (!Application.isPlaying) { return; }
 			if (IsInvalidRuntime(identifier)) { return; }
 
-			object[] param = new object[1];
+			object[] param = new object[3];
 			param[0] = identifier;
+			param[1] = channelId;
+			param[2] = characterId;
 
 			if (pubSdkWrapper != null)
-				pubSdkWrapper.Call("restoreRefund", param);
+				pubSdkWrapper.Call("openVoided", param);
 		}
 
 		public static void OpenTerms(string identifier)
