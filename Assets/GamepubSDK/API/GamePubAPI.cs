@@ -73,17 +73,17 @@ namespace GamePub.PubSDK
 
 		public static void RetryPurchase(string channelId,
                                          string characterId,
-                                         Action<Result<PubPurchaseResultList>> action)
+                                         Action<Result<PubRetryPurchaseResult>> action)
 		{
-			var identifier = AddAction(FlattenAction.JsonFlatten<PubPurchaseResultList>(action));
+			var identifier = AddAction(FlattenAction.JsonFlatten<PubRetryPurchaseResult>(action));
 			NativeInterface.RetryPurchase(identifier, channelId, characterId);
 		}
 
 		public static void OpenVoided(string channelId,
 									  string characterId,
-									  Action<Result<PubPurchaseResultList>> action)
+									  Action<Result<PubVoidedResult>> action)
 		{
-			var identifier = AddAction(FlattenAction.JsonFlatten<PubPurchaseResultList>(action));
+			var identifier = AddAction(FlattenAction.JsonFlatten<PubVoidedResult>(action));
 			NativeInterface.OpenVoided(identifier, channelId, characterId);
 		}
 

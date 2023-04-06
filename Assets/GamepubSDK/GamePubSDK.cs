@@ -93,14 +93,14 @@ namespace GamePub.PubSDK
 
 		public void RetryPurchase(string channelId,
                                   string characterId,
-                                  Action<Result<PubPurchaseResultList>> action)
+                                  Action<Result<PubRetryPurchaseResult>> action)
 		{
 			GamePubAPI.RetryPurchase(channelId, characterId, action);
 		}
 
 		public void OpenVoided(string channelId,
 							   string characterId,
-							   Action<Result<PubPurchaseResultList>> action)
+							   Action<Result<PubVoidedResult>> action)
 		{
 			GamePubAPI.OpenVoided(channelId, characterId, action);
 		}

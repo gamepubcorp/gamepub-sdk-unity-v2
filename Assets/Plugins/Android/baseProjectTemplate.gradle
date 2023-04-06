@@ -2,10 +2,7 @@
 
 allprojects {
     buildscript {
-        ext.staging_num = '1152'
-        // 1149: GalaxyStore + no consume trouble
-        // 1150: GalaxyStore + consume trouble test
-        // 1152: no GalaxyStore
+        ext.staging_num = '1157'
 
         repositories {**ARTIFACTORYREPOSITORY**
             google()
