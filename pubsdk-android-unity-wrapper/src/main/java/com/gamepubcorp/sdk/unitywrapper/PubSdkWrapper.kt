@@ -9,11 +9,12 @@ import com.google.gson.Gson
 import com.unity3d.player.UnityPlayer
 import io.github.gamepubcorp.PubCallback
 import io.github.gamepubcorp.customer.PubTermsResult
+import io.github.gamepubcorp.customer.PubVoidedResult
 import io.github.gamepubcorp.data.PubSetupResult
 import io.github.gamepubcorp.data.PubUnit
 import io.github.gamepubcorp.iap.PubInitBillingResult
 import io.github.gamepubcorp.iap.PubPurchaseResult
-import io.github.gamepubcorp.iap.PubPurchaseResultList
+import io.github.gamepubcorp.iap.PubRetryPurchaseResult
 
 class PubSdkWrapper {
 
@@ -143,7 +144,7 @@ class PubSdkWrapper {
             currentActivity,
             channelId,
             characterId,
-            PubCallback<PubPurchaseResultList>().apply {
+            PubCallback<PubRetryPurchaseResult>().apply {
                 success = { res ->
                     val result = gson.toJson(res)
                     CallbackMessageForUnity(identifier, result).sendMessageOk()
@@ -159,11 +160,11 @@ class PubSdkWrapper {
                channelId: String,
                characterId: String){
         val currentActivity = UnityPlayer.currentActivity
-        //TODO: change to openVoided
+
         pubApiClient.openVoided(
             currentActivity,
             channelId,
-            characterId, PubCallback<PubPurchaseResultList>().apply {
+            characterId, PubCallback<PubVoidedResult>().apply {
                 success = { res ->
                     val result = gson.toJson(res)
                     CallbackMessageForUnity(identifier, result).sendMessageOk()
