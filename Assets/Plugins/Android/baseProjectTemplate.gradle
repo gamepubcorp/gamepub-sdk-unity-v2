@@ -8,8 +8,8 @@ allprojects {
             google()
             mavenCentral()
             maven {
-                // url "https://s01.oss.sonatype.org/content/repositories/releases/"
-                url "https://s01.oss.sonatype.org/content/repositories/iogithubgamepubcorp-$staging_num"
+                url "https://s01.oss.sonatype.org/content/repositories/releases/"
+                // url "https://s01.oss.sonatype.org/content/repositories/iogithubgamepubcorp-$staging_num"
             }
             maven { url 'https://repo.onestore.co.kr/repository/onestore-sdk-public' }
         }
@@ -29,8 +29,8 @@ allprojects {
         google()
         mavenCentral()
         maven {
-            // url "https://s01.oss.sonatype.org/content/repositories/releases/"
-            url "https://s01.oss.sonatype.org/content/repositories/iogithubgamepubcorp-$staging_num"
+            url "https://s01.oss.sonatype.org/content/repositories/releases/"
+            // url "https://s01.oss.sonatype.org/content/repositories/iogithubgamepubcorp-$staging_num"
         }
         maven { url 'https://repo.onestore.co.kr/repository/onestore-sdk-public' }
 

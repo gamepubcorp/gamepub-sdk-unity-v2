@@ -1,0 +1,167 @@
+{
+  "project_info": {
+    "project_number": "892923933661",
+    "firebase_url": "https://pub-sdk-unity.firebaseio.com",
+    "project_id": "pub-sdk-unity",
+    "storage_bucket": "pub-sdk-unity.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:892923933661:android:f68143b571a6ea8f513c34",
+        "android_client_info": {
+          "package_name": "com.gamepub.galaxystore.sample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "892923933661-9tjsk2bmbjebckpnp05rj31l71qncnjc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gamepub.galaxystore.sample",
+            "certificate_hash": "22ca59d800ab2742d666ca8c5418097070c003f5"
+          }
+        },
+        {
+          "client_id": "892923933661-cau8okacpe63ofvkatjiop38svhh5do2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gamepub.galaxystore.sample",
+            "certificate_hash": "bfb336440857f9532a04d9d31e689721751549cc"
+          }
+        },
+        {
+          "client_id": "892923933661-1218sobcuhmmt93haj2j22dom4vdppgl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFO-1F9C-BbGjmnGAq9mQCimLUaAVW4YI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "892923933661-1218sobcuhmmt93haj2j22dom4vdppgl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "892923933661-q436l9ngqgbtt3qr043bh0o333htoje7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gamepub.ios.testapp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:892923933661:android:3d6a12ed057b6ee0513c34",
+        "android_client_info": {
+          "package_name": "com.gamepub.onestore.sample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "892923933661-h3jausmf1gtbo17ds8neb3d9bv88stip.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gamepub.onestore.sample",
+            "certificate_hash": "bfb336440857f9532a04d9d31e689721751549cc"
+          }
+        },
+        {
+          "client_id": "892923933661-hhoeqjka11rvu4gl24b05ghvo9lo199d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gamepub.onestore.sample",
+            "certificate_hash": "22ca59d800ab2742d666ca8c5418097070c003f5"
+          }
+        },
+        {
+          "client_id": "892923933661-1218sobcuhmmt93haj2j22dom4vdppgl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFO-1F9C-BbGjmnGAq9mQCimLUaAVW4YI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "892923933661-1218sobcuhmmt93haj2j22dom4vdppgl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "892923933661-q436l9ngqgbtt3qr043bh0o333htoje7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gamepub.ios.testapp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:892923933661:android:2e1475d780b6b8ed513c34",
+        "android_client_info": {
+          "package_name": "com.gamepub.testapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "892923933661-dspbp68bifd78erbg2gh8qlp5cma87qh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gamepub.testapp",
+            "certificate_hash": "bfb336440857f9532a04d9d31e689721751549cc"
+          }
+        },
+        {
+          "client_id": "892923933661-umhtq8eooctph09osdrrk0vlm01pot4u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gamepub.testapp",
+            "certificate_hash": "22ca59d800ab2742d666ca8c5418097070c003f5"
+          }
+        },
+        {
+          "client_id": "892923933661-1218sobcuhmmt93haj2j22dom4vdppgl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFO-1F9C-BbGjmnGAq9mQCimLUaAVW4YI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "892923933661-1218sobcuhmmt93haj2j22dom4vdppgl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "892923933661-q436l9ngqgbtt3qr043bh0o333htoje7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gamepub.ios.testapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

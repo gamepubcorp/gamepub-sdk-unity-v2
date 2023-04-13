@@ -1,16 +1,119 @@
 using UnityEngine;
-using UnityEngine.UI;
 using GamePub.PubSDK;
+using Firebase;
+using Firebase.Messaging;
+using Firebase.Extensions;
+using Unity.Notifications.Android;
+using UnityEngine.Android;
 
 public class LoginController : MonoBehaviour
 {
+	string CHANNEL_ID = "pubSdkChannel";
+	int apiLevel;
+
     // Start is called before the first frame update
     void Start()
     {
-        SetupSDKandInitBilling();
+#if UNITY_ANDROID
+		InitializeAndroidLocalPush();
+		InitializeFCM();
+#elif UNITY_IOS
+
+#endif 
+		SetupSDKandInitBilling();
     }
-    
-    public void SetupSDKandInitBilling()
+
+	public void InitializeAndroidLocalPush()
+	{
+		string androidInfo = SystemInfo.operatingSystem;
+		Debug.Log("androidInfo: " + androidInfo);
+		apiLevel = int.Parse(androidInfo.Substring(androidInfo.IndexOf("-") + 1, 2));
+		Debug.Log("apiLevel: " + apiLevel);
+
+		if (apiLevel >= 33 &&
+			!Permission.HasUserAuthorizedPermission("android.permission.POST_NOTIFICATIONS"))
+		{
+			Permission.RequestUserPermission("android.permission.POST_NOTIFICATIONS");
+		}
+
+		if (apiLevel >= 26)
+		{
+			var channel = new AndroidNotificationChannel()
+			{
+				Id = CHANNEL_ID,
+				Name = "pubSdk",
+				Importance = Importance.High,
+				Description = "for test",
+			};
+			AndroidNotificationCenter.RegisterNotificationChannel(channel);
+		}
+	}
+
+	public void InitializeFCM()
+	{
+		FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
+			var dependencyStatus = task.Result;
+			if (dependencyStatus == DependencyStatus.Available)
+			{
+				Debug.Log("Google Play version OK");
+
+				FirebaseMessaging.TokenReceived += OnTokenReceived;
+				FirebaseMessaging.MessageReceived += OnMessageReceived;
+			}
+			else
+			{
+				Debug.LogError(string.Format(
+					"Could not resolve all Firebase dependencies: {0}", 
+					dependencyStatus
+				));
+			}
+		});
+	}
+
+	public void OnTokenReceived(object sender, TokenReceivedEventArgs token)
+	{
+		Debug.Log("OnTokenReceived: " + token.Token);
+	}
+	public void OnMessageReceived(object sender, MessageReceivedEventArgs e)
+	{
+		string type = "";
+		string title = "";
+		string body = "";
+
+		// for notification message
+		if (e.Message.Notification != null) 
+		{
+			type = "notification";
+			title = e.Message.Notification.Title;
+			body = e.Message.Notification.Body;
+		}
+		// for data message
+		else if (e.Message.Data.Count > 0)
+		{
+			type = "data";
+			title = e.Message.Data["title"];
+			body = e.Message.Data["body"];
+		}
+		Debug.Log("message type: " + type + ", title: " + title + ", body: " + body);
+
+		// send local notification
+		var notification = new AndroidNotification();
+		notification.SmallIcon = "icon_0";
+		notification.Title = title;
+		notification.Text = body;
+		notification.FireTime = System.DateTime.Now;
+
+		if (apiLevel >= 26)
+		{
+			AndroidNotificationCenter.SendNotification(notification, CHANNEL_ID);
+		}
+		else
+		{
+			Debug.LogError("Notifications couldn't be displayed, because the Android SDK level of your device is lower than 26.");
+		}
+	}
+
+	public void SetupSDKandInitBilling()
     {
         GamePubSDK.Ins.SetupSDK(result => {
 			result.Match(
@@ -115,15 +218,19 @@ public class LoginController : MonoBehaviour
 
 	public void SetPushToken()
 	{
-		string pushToken = "samplePushTokenUnity1jk234bg235jy23jk";
-		GamePubSDK.Ins.SetPushToken(pushToken, result => {
-			result.Match(
-				value => {
-					Debug.Log("SetPushToken: " + value.Code.ToString() + " " + value.Msg);
-				},
-				error => {
-					Debug.Log("SetPushToken: " + error.Code.ToString() + " " + error.Message);
-				});
+		var task = FirebaseMessaging.GetTokenAsync().ContinueWithOnMainThread(task => {
+			string fcmToken = task.Result;
+			Debug.Log("fcmToken: "+fcmToken);
+
+			GamePubSDK.Ins.SetPushToken(fcmToken, result => {
+				result.Match(
+					value => {
+						Debug.Log("SetPushToken: " + value.Code.ToString() + " " + value.Msg);
+					},
+					error => {
+						Debug.Log("SetPushToken: " + error.Code.ToString() + " " + error.Message);
+					});
+			});
 		});
 	}
 

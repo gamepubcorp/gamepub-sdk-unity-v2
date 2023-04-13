@@ -6,7 +6,7 @@ namespace GamePub.PubSDK
     public class GamePubSDK : MonoBehaviour
     {
         private static GamePubSDK instance;
-        private bool isSetup = false;
+        //private bool isSetup = false;
 
         void Awake()
         {
@@ -41,7 +41,7 @@ namespace GamePub.PubSDK
                 throw new System.Exception("Gamepub SDK ProjectId is not set.");
             }
             GamePubAPI.SetupSDK(GamePubSDKSettings.ProjectId, action);
-            isSetup = true;
+            //isSetup = true;
         }
 
         public void Login(PubLoginType loginType,
