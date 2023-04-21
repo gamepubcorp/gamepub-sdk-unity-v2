@@ -3,22 +3,16 @@ package com.gamepubcorp.sdk.unitywrapper
 import io.github.gamepubcorp.api.PubApiClient
 import io.github.gamepubcorp.api.PubApiClientBuilder
 import com.gamepubcorp.sdk.unitywrapper.CallbackMessageForUnity.Companion.sendMessageError
-import com.gamepubcorp.sdk.unitywrapper.activity.PubSdkWrapperActivity
+import com.gamepubcorp.sdk.unitywrapper.auth.PubSdkWrapperActivity
 import com.gamepubcorp.sdk.unitywrapper.util.Log
 import com.google.gson.Gson
 import com.unity3d.player.UnityPlayer
-import io.github.gamepubcorp.PubCallback
-import io.github.gamepubcorp.customer.PubTermsResult
-import io.github.gamepubcorp.customer.PubVoidedResult
-import io.github.gamepubcorp.data.PubSetupResult
-import io.github.gamepubcorp.data.PubUnit
-import io.github.gamepubcorp.iap.PubInitBillingResult
-import io.github.gamepubcorp.iap.PubPurchaseResult
-import io.github.gamepubcorp.iap.PubRetryPurchaseResult
+import io.github.gamepubcorp.result.*
+import io.github.gamepubcorp.utils.PubCallback
 
 class PubSdkWrapper {
 
-    private val TAG = "PubSdkWrapper"
+    private val TAG = "bridge"
     private lateinit var pubApiClient: PubApiClient
     private val gson = Gson()
 
@@ -179,7 +173,7 @@ class PubSdkWrapper {
     fun openTerms(identifier: String){
         val currentActivity = UnityPlayer.currentActivity
 
-        pubApiClient.openTerms(currentActivity, PubCallback<PubTermsResult>().apply {
+        pubApiClient.openTerms(currentActivity, PubCallback<PubUnit>().apply {
             success = { res ->
                 val result = gson.toJson(res)
                 CallbackMessageForUnity(identifier, result).sendMessageOk()
@@ -204,10 +198,10 @@ class PubSdkWrapper {
         })
     }
 
-    fun openCustomerCenter(identifier: String) {
+    fun openHelp(identifier: String) {
         val currentActivity = UnityPlayer.currentActivity
 
-        pubApiClient.openCustomerCenter(currentActivity, PubCallback<PubUnit>().apply {
+        pubApiClient.openHelp(currentActivity, PubCallback<PubUnit>().apply {
             success = { res ->
                 val result = gson.toJson(res)
                 CallbackMessageForUnity(identifier, result).sendMessageOk()

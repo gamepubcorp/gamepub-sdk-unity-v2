@@ -1,10 +1,8 @@
 package com.gamepubcorp.sdk.unitywrapper
 
-import com.gamepubcorp.sdk.unitywrapper.model.ErrorForUnity
 import com.google.gson.Gson
 import com.unity3d.player.UnityPlayer
-import io.github.gamepubcorp.PubApiError
-import io.github.gamepubcorp.auth.PubLoginResult
+import io.github.gamepubcorp.result.PubApiError
 
 data class CallbackMessageForUnity(
     val identifier: String,
@@ -40,11 +38,8 @@ data class CallbackMessageForUnity(
             identifier: String,
             apiError: PubApiError
         ) {
-            val error = ErrorForUnity(
-                apiError.errCode,
-                apiError.message
-            )
-            CallbackMessageForUnity(identifier, gson.toJson(error)).sendMessageError();
+            val jsonError = gson.toJson(apiError)
+            CallbackMessageForUnity(identifier, jsonError).sendMessageError();
         }
     }
 }
