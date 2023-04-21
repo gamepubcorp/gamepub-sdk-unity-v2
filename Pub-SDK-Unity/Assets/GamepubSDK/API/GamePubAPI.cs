@@ -30,20 +30,6 @@ namespace GamePub.PubSDK
 			NativeInterface.AutoLogin(identifier);
 		}
 
-		public static void SetPushToken(string pushToken,
-                                        Action<Result<PubUnit>> action)
-		{
-			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
-			NativeInterface.SetPushToken(identifier, pushToken);
-		}
-
-		public static void SetPushConfig(PubPushConfig pushConfig, 
-                                         Action<Result<PubUnit>> action)
-		{
-			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
-			NativeInterface.SetPushConfig(identifier, pushConfig);
-		}
-
 		public static void Logout(Action<Result<PubUnit>> action)
         {
 			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
@@ -87,9 +73,9 @@ namespace GamePub.PubSDK
 			NativeInterface.OpenVoided(identifier, channelId, characterId);
 		}
 
-		public static void OpenTerms(Action<Result<PubTermsResult>> action)
+		public static void OpenTerms(Action<Result<PubUnit>> action)
 		{
-			var identifier = AddAction(FlattenAction.JsonFlatten<PubTermsResult>(action));
+			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
 			NativeInterface.OpenTerms(identifier);
 		}
 
@@ -99,10 +85,25 @@ namespace GamePub.PubSDK
 			NativeInterface.OpenImageBanner(identifier);
 		}
 
-		public static void OpenCustomerCenter(Action<Result<PubUnit>> action)
+		public static void OpenHelp(Action<Result<PubUnit>> action)
 		{
 			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
-			NativeInterface.OpenCustomerCenter(identifier);
+			NativeInterface.OpenHelp(identifier);
+		}
+
+		public static void SetPushToken(string pushToken,
+										Action<Result<PubUnit>> action)
+		{
+			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
+			NativeInterface.SetPushToken(identifier, pushToken);
+		}
+
+		public static void SetPushConfig(bool agreedPush,
+										 bool agreedNightPush,
+										 Action<Result<PubUnit>> action)
+		{
+			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
+			NativeInterface.SetPushConfig(identifier, agreedPush, agreedNightPush);
 		}
 
 		static string AddAction(FlattenAction action)

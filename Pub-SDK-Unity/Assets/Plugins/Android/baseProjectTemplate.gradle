@@ -2,16 +2,9 @@
 
 allprojects {
     buildscript {
-        ext.staging_num = '1157'
-
         repositories {**ARTIFACTORYREPOSITORY**
             google()
             mavenCentral()
-            maven {
-                url "https://s01.oss.sonatype.org/content/repositories/releases/"
-                // url "https://s01.oss.sonatype.org/content/repositories/iogithubgamepubcorp-$staging_num"
-            }
-            maven { url 'https://repo.onestore.co.kr/repository/onestore-sdk-public' }
         }
 
         dependencies {
@@ -28,11 +21,6 @@ allprojects {
     repositories {**ARTIFACTORYREPOSITORY**
         google()
         mavenCentral()
-        maven {
-            url "https://s01.oss.sonatype.org/content/repositories/releases/"
-            // url "https://s01.oss.sonatype.org/content/repositories/iogithubgamepubcorp-$staging_num"
-        }
-        maven { url 'https://repo.onestore.co.kr/repository/onestore-sdk-public' }
 
         flatDir {
             dirs "${project(':unityLibrary').projectDir}/libs"

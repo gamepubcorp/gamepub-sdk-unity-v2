@@ -58,35 +58,6 @@ namespace GamePub.PubSDK
 				pubSdkWrapper.Call("autoLogin", param);
 		}
 
-		public static void SetPushToken(string identifier, 
-                                        string pushToken)
-		{
-			if (!Application.isPlaying) { return; }
-			if (IsInvalidRuntime(null)) { return; }
-
-			object[] param = new object[2];
-			param[0] = identifier;
-            param[1] = pushToken;
-
-			if (pubSdkWrapper != null)
-				pubSdkWrapper.Call("setPushToken", param);
-		}
-
-		public static void SetPushConfig(string identifier,
-										 PubPushConfig pushConfig)
-		{
-			if (!Application.isPlaying) { return; }
-			if (IsInvalidRuntime(null)) { return; }
-
-			object[] param = new object[3];
-			param[0] = identifier;
-			param[1] = pushConfig.AgreedPush;
-			param[2] = pushConfig.AgreedNightPush;
-
-			if (pubSdkWrapper != null)
-				pubSdkWrapper.Call("setPushConfig", param);
-		}
-
 		public static void Logout(string identifier)
         {
             if (!Application.isPlaying) { return; }
@@ -197,7 +168,7 @@ namespace GamePub.PubSDK
 				pubSdkWrapper.Call("openImageBanner", param);
 		}
 
-		public static void OpenCustomerCenter(string identifier)
+		public static void OpenHelp(string identifier)
 		{
 			if (!Application.isPlaying) { return; }
 			if (IsInvalidRuntime(identifier)) { return; }
@@ -206,7 +177,37 @@ namespace GamePub.PubSDK
 			param[0] = identifier;
 
 			if (pubSdkWrapper != null)
-				pubSdkWrapper.Call("openCustomerCenter", param);
+				pubSdkWrapper.Call("openHelp", param);
+		}
+
+		public static void SetPushToken(string identifier,
+										string pushToken)
+		{
+			if (!Application.isPlaying) { return; }
+			if (IsInvalidRuntime(null)) { return; }
+
+			object[] param = new object[2];
+			param[0] = identifier;
+			param[1] = pushToken;
+
+			if (pubSdkWrapper != null)
+				pubSdkWrapper.Call("setPushToken", param);
+		}
+
+		public static void SetPushConfig(string identifier,
+										 bool agreedPush,
+										 bool agreedNightPush)
+		{
+			if (!Application.isPlaying) { return; }
+			if (IsInvalidRuntime(null)) { return; }
+
+			object[] param = new object[3];
+			param[0] = identifier;
+			param[1] = agreedPush;
+			param[2] = agreedNightPush;
+
+			if (pubSdkWrapper != null)
+				pubSdkWrapper.Call("setPushConfig", param);
 		}
 
 		private static bool IsInvalidRuntime(string identifier)

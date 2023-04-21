@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 164206518}
   - component: {fileID: 164206517}
   m_Layer: 5
-  m_Name: CustomerCenter
+  m_Name: OpenHelp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -208,7 +208,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1578747830}
         m_TargetAssemblyTypeName: LoginController, Assembly-CSharp
-        m_MethodName: OpenCustomerCenter
+        m_MethodName: OpenHelp
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -486,7 +486,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1578747830}
         m_TargetAssemblyTypeName: LoginController, Assembly-CSharp
-        m_MethodName: SocialLogin
+        m_MethodName: Login
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -619,7 +619,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1578747830}
         m_TargetAssemblyTypeName: LoginController, Assembly-CSharp
-        m_MethodName: SocialLogin
+        m_MethodName: Login
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -737,7 +737,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uAD6C\uAE00 \uB85C\uADF8\uC544\uC6C3"
+  m_Text: "\uB85C\uADF8\uC544\uC6C3"
 --- !u!222 &266230123
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -964,7 +964,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1578747830}
         m_TargetAssemblyTypeName: LoginController, Assembly-CSharp
-        m_MethodName: GoogleLogout
+        m_MethodName: Logout
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1737,8 +1737,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 564119618}
   m_HandleRect: {fileID: 564119617}
   m_Direction: 2
-  m_Value: 0.99999964
-  m_Size: 0.7901234
+  m_Value: 1
+  m_Size: 0.7890839
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1866,7 +1866,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1578747830}
         m_TargetAssemblyTypeName: LoginController, Assembly-CSharp
-        m_MethodName: SocialLogin
+        m_MethodName: Login
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2423,7 +2423,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1578747830}
         m_TargetAssemblyTypeName: LoginController, Assembly-CSharp
-        m_MethodName: SocialLogin
+        m_MethodName: Login
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

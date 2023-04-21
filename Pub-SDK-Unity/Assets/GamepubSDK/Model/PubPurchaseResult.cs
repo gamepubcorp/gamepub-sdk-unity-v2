@@ -5,8 +5,9 @@ namespace GamePub.PubSDK
 {
     [Serializable]
     public class PubPurchaseResult
-    {        
-        private float price = 0;
+    {
+		[SerializeField]
+		private float price = 0;
         [SerializeField]
         private string gamepubProductId = "";
         [SerializeField]

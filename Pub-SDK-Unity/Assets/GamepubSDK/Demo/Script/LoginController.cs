@@ -5,6 +5,7 @@ using Firebase.Messaging;
 using Firebase.Extensions;
 using Unity.Notifications.Android;
 using UnityEngine.Android;
+using System.Text;
 
 public class LoginController : MonoBehaviour
 {
@@ -126,16 +127,16 @@ public class LoginController : MonoBehaviour
 								Debug.Log(JsonUtility.ToJson(value));
 							},
 							error => {
-								Debug.Log("InitBilling: "+error.Code.ToString()+" "+error.Message);
+								Debug.Log("InitBilling: "+error.ErrCode.ToString()+" "+error.Message);
 							});
 					});
 				},
 				error => {
-					Debug.Log("Setup: " + error.Code.ToString() + " " + error.Message);
+					Debug.Log("Setup: " + error.ErrCode.ToString() + " " + error.Message);
 				});
 		});
     }
-    public void SocialLogin(string loginType)
+    public void Login(string loginType)
     {
 		PubLoginType pubLoginType = 0;
 		switch(loginType)
@@ -163,10 +164,10 @@ public class LoginController : MonoBehaviour
 			result => {
 				result.Match(
 					value => {
-						Debug.Log(JsonUtility.ToJson(value));
+						Debug.Log("Login: " + JsonUtility.ToJson(value));
 					},
 					error => {
-						Debug.Log("Login: " + error.Code.ToString() + " " + error.Message);
+						Debug.Log("Login: " + error.ErrCode.ToString() + " " + error.Message);
 					});
 			});
 	}
@@ -175,10 +176,10 @@ public class LoginController : MonoBehaviour
 		GamePubSDK.Ins.AutoLogin(result => {
 			result.Match(
 				value => {
-					Debug.Log("AutoLogin: " + value.Code.ToString() + " " + value.Msg);
+					Debug.Log("AutoLogin: " + value.Code.ToString() + " " + value.Message);
 				},
 				error => {
-					Debug.Log("AutoLogin: " + error.Code.ToString() + " " + error.Message);
+					Debug.Log("AutoLogin: " + error.ErrCode.ToString() + " " + error.Message);
 				});
 		});
 	}
@@ -208,47 +209,12 @@ public class LoginController : MonoBehaviour
 			result => {
 				result.Match(
 					value => {
-						Debug.Log(JsonUtility.ToJson(value));
+						Debug.Log("LinkAccount: " + JsonUtility.ToJson(value));
 					},
 					error => {
-						Debug.Log("LinkAccount: " + error.Code.ToString() + " " + error.Message);
+						Debug.Log("LinkAccount: " + error.ErrCode.ToString() + " " + error.Message);
 					});
 			});
-	}
-
-	public void SetPushToken()
-	{
-		var task = FirebaseMessaging.GetTokenAsync().ContinueWithOnMainThread(task => {
-			string fcmToken = task.Result;
-			Debug.Log("fcmToken: "+fcmToken);
-
-			GamePubSDK.Ins.SetPushToken(fcmToken, result => {
-				result.Match(
-					value => {
-						Debug.Log("SetPushToken: " + value.Code.ToString() + " " + value.Msg);
-					},
-					error => {
-						Debug.Log("SetPushToken: " + error.Code.ToString() + " " + error.Message);
-					});
-			});
-		});
-	}
-
-	public void SetPushConfig()
-	{
-		PubPushConfig pushConfig = new PubPushConfig();
-		pushConfig.AgreedPush = true;
-		pushConfig.AgreedNightPush = false;
-
-		GamePubSDK.Ins.SetPushConfig(pushConfig, result => {
-			result.Match(
-				value => {
-					Debug.Log("SetPushConfig: " + value.Code.ToString() + " " + value.Msg);
-				},
-				error => {
-					Debug.Log("SetPushConfig: " + error.Code.ToString() + " " + error.Message);
-				});
-		});
 	}
 
 	public void Logout()
@@ -256,10 +222,10 @@ public class LoginController : MonoBehaviour
 		GamePubSDK.Ins.Logout(result => {
 			result.Match(
 				value => {
-					Debug.Log("Logout: " + value.Code.ToString() + " " + value.Msg);
+					Debug.Log("Logout: " + value.Code.ToString() + " " + value.Message);
 				},
 				error => {
-					Debug.Log("Logout: " + error.Code.ToString() + " " + error.Message);
+					Debug.Log("Logout: " + error.ErrCode.ToString() + " " + error.Message);
 				});
 		});
 	}
@@ -269,10 +235,10 @@ public class LoginController : MonoBehaviour
 		GamePubSDK.Ins.Withdraw(result => {
 			result.Match(
 				value => {
-					Debug.Log("Withdraw: " + value.Code.ToString() + " " + value.Msg);
+					Debug.Log("Withdraw: " + value.Code.ToString() + " " + value.Message);
 				},
 				error => {
-					Debug.Log("Withdraw: " + error.Code.ToString() + " " + error.Message);
+					Debug.Log("Withdraw: " + error.ErrCode.ToString() + " " + error.Message);
 				});
 		});
 	}
@@ -288,10 +254,10 @@ public class LoginController : MonoBehaviour
 		GamePubSDK.Ins.Purchase(productId, channelId, characterId, result => {
 			result.Match(
 				value => {
-					Debug.Log(JsonUtility.ToJson(value));
+					Debug.Log("Purchase: " + JsonUtility.ToJson(value));
 				},
 				error => {
-					Debug.Log("Purchase: " + error.Code.ToString() + " " + error.Message);
+					Debug.Log("Purchase: " + error.ErrCode.ToString() + " " + error.Message);
 				});
 		});
 	}
@@ -304,10 +270,10 @@ public class LoginController : MonoBehaviour
 		GamePubSDK.Ins.RetryPurchase(channelId, characterId, result => {
 			result.Match(
 				value => {
-					Debug.Log(JsonUtility.ToJson(value));
+					Debug.Log("RetryPurchase: " + JsonUtility.ToJson(value));
 				},
 				error => {
-					Debug.Log("RetryPurchase: " + error.Code.ToString() + " " + error.Message);
+					Debug.Log("RetryPurchase: " + error.ErrCode.ToString() + " " + error.Message);
 				});
 		});
 	}
@@ -320,10 +286,10 @@ public class LoginController : MonoBehaviour
 		GamePubSDK.Ins.OpenVoided(channelId, characterId, result => {
 			result.Match(
 				value => {
-					Debug.Log(JsonUtility.ToJson(value));
+					Debug.Log("OpenVoided: " + JsonUtility.ToJson(value));
 				},
 				error => {
-					Debug.Log("OpenVoided: " + error.Code.ToString() + " " + error.Message);
+					Debug.Log("OpenVoided: " + error.ErrCode.ToString() + " " + error.Message);
 				});
 		});
 	}
@@ -333,10 +299,10 @@ public class LoginController : MonoBehaviour
 		GamePubSDK.Ins.OpenTerms(result => {
 			result.Match(
 				value => {
-					Debug.Log(JsonUtility.ToJson(value));
+					Debug.Log("Terms: " + value.Code.ToString() + " " + value.Message);
 				},
 				error => {
-					Debug.Log("Terms: " + error.Code.ToString() + " " + error.Message);
+					Debug.Log("Terms: " + error.ErrCode.ToString() + " " + error.Message);
 				});
 		});
 	}
@@ -346,23 +312,57 @@ public class LoginController : MonoBehaviour
 		GamePubSDK.Ins.OpenImageBanner(result => {
 			result.Match(
 				value => {
-					Debug.Log("Banner: " + value.Code.ToString() + " " + value.Msg);
+					Debug.Log("Banner: " + value.Code.ToString() + " " + value.Message);
 				},
 				error => {
-					Debug.Log("Banner: " + error.Code.ToString() + " " + error.Message);
+					Debug.Log("Banner: " + error.ErrCode.ToString() + " " + error.Message);
 				});
 		});
 	}
 
-	public void OpenCustomerCenter()
+	public void OpenHelp()
 	{
-		GamePubSDK.Ins.OpenCustomerCenter(result => {
+		GamePubSDK.Ins.OpenHelp(result => {
 			result.Match(
 				value => {
-					Debug.Log("Customer: " + value.Code.ToString() + " " + value.Msg);
+					Debug.Log("Help: " + value.Code.ToString() + " " + value.Message);
 				},
 				error => {
-					Debug.Log("Customer: " + error.Code.ToString() + " " + error.Message);
+					Debug.Log("Help: " + error.ErrCode.ToString() + " " + error.Message);
+				});
+		});
+	}
+
+	public void SetPushToken()
+	{
+		FirebaseMessaging.GetTokenAsync().ContinueWithOnMainThread(task => {
+			string fcmToken = task.Result;
+			Debug.Log("fcmToken: " + fcmToken);
+
+			GamePubSDK.Ins.SetPushToken(fcmToken, result => {
+				result.Match(
+					value => {
+						Debug.Log("SetPushToken: " + value.Code.ToString() + " " + value.Message);
+					},
+					error => {
+						Debug.Log("SetPushToken: " + error.ErrCode.ToString() + " " + error.Message);
+					});
+			});
+		});
+	}
+
+	public void SetPushConfig()
+	{
+		bool agreedPush = true;
+		bool agreedNightPush = false;
+
+		GamePubSDK.Ins.SetPushConfig(agreedPush, agreedNightPush, result => {
+			result.Match(
+				value => {
+					Debug.Log("SetPushConfig: " + value.Code.ToString() + " " + value.Message);
+				},
+				error => {
+					Debug.Log("SetPushConfig: " + error.ErrCode.ToString() + " " + error.Message);
 				});
 		});
 	}

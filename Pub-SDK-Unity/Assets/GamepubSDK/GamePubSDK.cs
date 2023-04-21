@@ -56,18 +56,6 @@ namespace GamePub.PubSDK
 			GamePubAPI.AutoLogin(action);
 		}
 
-		public void SetPushToken(string pushToken, 
-                                Action<Result<PubUnit>> action)
-		{
-			GamePubAPI.SetPushToken(pushToken, action);
-		}
-
-		public void SetPushConfig(PubPushConfig pushConfig,
-                                  Action<Result<PubUnit>> action)
-		{
-			GamePubAPI.SetPushConfig(pushConfig, action);
-		}
-
 		public void Logout(Action<Result<PubUnit>> action)
         {            
             GamePubAPI.Logout(action);            
@@ -105,7 +93,7 @@ namespace GamePub.PubSDK
 			GamePubAPI.OpenVoided(channelId, characterId, action);
 		}
 
-		public void OpenTerms(Action<Result<PubTermsResult>> action)
+		public void OpenTerms(Action<Result<PubUnit>> action)
 		{
 			GamePubAPI.OpenTerms(action);
 		}
@@ -115,9 +103,22 @@ namespace GamePub.PubSDK
 			GamePubAPI.OpenImageBanner(action);
 		}
 
-		public void OpenCustomerCenter(Action<Result<PubUnit>> action)
+		public void OpenHelp(Action<Result<PubUnit>> action)
 		{
-			GamePubAPI.OpenCustomerCenter(action);
+			GamePubAPI.OpenHelp(action);
+		}
+
+		public void SetPushToken(string pushToken,
+								Action<Result<PubUnit>> action)
+		{
+			GamePubAPI.SetPushToken(pushToken, action);
+		}
+
+		public void SetPushConfig(bool agreedPush,
+								  bool agreedNightPush,
+								  Action<Result<PubUnit>> action)
+		{
+			GamePubAPI.SetPushConfig(agreedPush, agreedNightPush, action);
 		}
 
 		public void OnApiOk(string result)

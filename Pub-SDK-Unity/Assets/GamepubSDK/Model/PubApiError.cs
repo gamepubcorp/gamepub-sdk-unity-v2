@@ -4,20 +4,20 @@ using UnityEngine;
 namespace GamePub.PubSDK
 {
     [Serializable]
-    public class Error
+    public class PubApiError
     {        
         [SerializeField]
-        private int code;
+        private int errCode;
         [SerializeField]
         private string message;               
 
-        public int Code { get { return code; } }
+        public int ErrCode { get { return errCode; } }
 
         public string Message { get { return message; } }
 
-        public Error(int code, string message)
+        public PubApiError(int errCode, string message)
         {            
-            this.code = code;
+            this.errCode = errCode;
             this.message = message;
         }
     }
