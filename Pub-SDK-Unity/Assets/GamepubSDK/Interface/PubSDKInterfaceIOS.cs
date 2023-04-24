@@ -53,56 +53,27 @@ namespace GamePub.PubSDK
         }
 
         [DllImport("__Internal")]
-        private static extern void pub_sdk_userInfoUpdate(string identifier,
-                                                          int languageCode,
-                                                          bool push,
-                                                          bool pushNight,
-                                                          bool pushAd);
-        public static void UserInfoUpdate(string identifier,
-                                          PubLanguageCode languageCode,
-                                          bool push,
-                                          bool pushNight,
-                                          bool pushAd)
+        private static extern void pub_sdk_autoLogin(string identifier);
+        public static void AutoLogin(string identifier)
         {
             if (!Application.isPlaying) { return; }
             if (IsInvalidRuntime(identifier)) { return; }
 
-            pub_sdk_userInfoUpdate(identifier, (int)languageCode, push, pushNight, pushAd);
+            pub_sdk_autoLogin(identifier);
         }
 
         [DllImport("__Internal")]
-        private static extern void pub_sdk_setAgreePush(bool push,
-                                                        bool pushNight,
-                                                        bool pushAd);
-        public static void SetAgreePush(bool push,
-                                        bool pushNight,
-                                        bool pushAd)
+        private static extern void pub_sdk_setPushConfig(bool push,
+                                                        bool pushNight);
+        public static void SetPushConfig(string identifier,
+                                         bool agreedPush,
+                                         bool agreedNightPush)
         {
             if (!Application.isPlaying) { return; }
-            if (IsInvalidRuntime(null)) { return; }
+            if (IsInvalidRuntime(identifier)) { return; }
 
-            pub_sdk_setAgreePush(push, pushNight, pushAd);
-        }
-
-        [DllImport("__Internal")]
-        private static extern string pub_sdk_getLoginType();
-        public static string GetLoginType()
-        {
-            if (!Application.isPlaying) { return null; }
-            if (IsInvalidRuntime(null)) { return null; }
-
-            return pub_sdk_getLoginType();
-        }
-
-        [DllImport("__Internal")]
-        private static extern string pub_sdk_getLanguageList();
-        public static string GetLanguageList()
-        {
-            if (!Application.isPlaying) { return null; }
-            if (IsInvalidRuntime(null)) { return null; }
-
-            return pub_sdk_getLanguageList();
-        }
+            pub_sdk_setPushConfig(agreedPush, agreedNightPush);
+        }        
 
         //[DllImport("__Internal")]
         //private static extern string pub_sdk_getProductList();
@@ -115,43 +86,43 @@ namespace GamePub.PubSDK
         //}
 
         [DllImport("__Internal")]
-        private static extern void pub_sdk_secede(string identifier);
-        public static void Secede(string identifier)
+        private static extern void pub_sdk_withdraw(string identifier);
+        public static void Withdraw(string identifier)
         {
             if (!Application.isPlaying) { return; }
             if (IsInvalidRuntime(identifier)) { return; }
 
-            pub_sdk_secede(identifier);
+            pub_sdk_withdraw(identifier);
         }
 
+        //[DllImport("__Internal")]
+        //private static extern void pub_sdk_secedeCancel(string identifier);
+        //public static void SecedeCancel(string identifier)
+        //{
+        //    if (!Application.isPlaying) { return; }
+        //    if (IsInvalidRuntime(identifier)) { return; }
+
+        //    pub_sdk_secedeCancel(identifier);
+        //}
+
         [DllImport("__Internal")]
-        private static extern void pub_sdk_secedeCancel(string identifier);
-        public static void SecedeCancel(string identifier)
+        private static extern void pub_sdk_openTerms(string identifier);
+        public static void OpenTerms(string identifier)
         {
             if (!Application.isPlaying) { return; }
             if (IsInvalidRuntime(identifier)) { return; }
 
-            pub_sdk_secedeCancel(identifier);
-        }
-
-        [DllImport("__Internal")]
-        private static extern void pub_sdk_openPolicyLink(string identifier, int policyType);
-        public static void OpenPolicyLink(string identifier, PubPolicyType policyType)
-        {
-            if (!Application.isPlaying) { return; }
-            if (IsInvalidRuntime(identifier)) { return; }
-
-            pub_sdk_openPolicyLink(identifier, (int)policyType);
+            pub_sdk_openTerms(identifier);
         }        
 
         [DllImport("__Internal")]
-        private static extern void pub_sdk_getImageBanner(string identifier);
-        public static void GetImageBanner(string identifier)
+        private static extern void pub_sdk_openImageBanner(string identifier);
+        public static void OpenImageBanner(string identifier)
         {
             if (!Application.isPlaying) { return; }
             if (IsInvalidRuntime(identifier)) { return; }
 
-            pub_sdk_getImageBanner(identifier);
+            pub_sdk_openImageBanner(identifier);
         }
 
         [DllImport("__Internal")]
@@ -165,83 +136,20 @@ namespace GamePub.PubSDK
         }
 
         [DllImport("__Internal")]
-        private static extern void pub_sdk_inAppPurchase(string identifier,
-                                                         string pid,
-                                                         string serverId,
-                                                         string playerId,
-                                                         string etc);
-        public static void InAppPurchase(string identifier,
-                                         string pid,
-                                         string serverId,
-                                         string playerId,
-                                         string etc)
+        private static extern void pub_sdk_purchase(string identifier,
+                                                         string productId,
+                                                         string channelId,
+                                                         string characterId);
+        public static void Purchase(string identifier,
+                                         string productId,
+                                         string channelId,
+                                         string characterId)
         {
             if (!Application.isPlaying) { return; }
             if (IsInvalidRuntime(identifier)) { return; }
 
-            pub_sdk_inAppPurchase(identifier, pid, serverId, playerId, etc);
-        }
-
-        [DllImport("__Internal")]
-        private static extern void pub_sdk_userRefundListSearch(string identifier,
-                                                                string accountId,
-                                                                string loginType,
-                                                                string channelId);
-        public static void UserRefundListSearch(string identifier,
-                                                string accountId,
-                                                string loginType,
-                                                string channelId)
-        {
-            if (!Application.isPlaying) { return; }
-            if (IsInvalidRuntime(identifier)) { return; }
-
-            pub_sdk_userRefundListSearch(identifier, accountId, loginType, channelId);
-        }
-
-        [DllImport("__Internal")]
-        private static extern void pub_sdk_userRefundRepurchase(string identifier,
-                                                                string accountId,
-                                                                string loginType,
-                                                                string channelId,
-                                                                string pid,
-                                                                string serverId,
-                                                                string playerId,
-                                                                string etc,
-                                                                string voidedTid);
-        public static void UserRefundRepurchase(string identifier,
-                                                string accountId,
-                                                string loginType,
-                                                string channelId,
-                                                string pid,
-                                                string serverId,
-                                                string playerId,
-                                                string etc,
-                                                string voidedTid)
-        {
-            if (!Application.isPlaying) { return; }
-            if (IsInvalidRuntime(identifier)) { return; }
-
-            pub_sdk_userRefundRepurchase(
-                identifier,
-                accountId,
-                loginType,
-                channelId,
-                pid,
-                serverId,
-                playerId,
-                etc,
-                voidedTid);
-        }
-
-        [DllImport("__Internal")]
-        private static extern void pub_sdk_versionCheck(string identifier);
-        public static void VersionCheck(string identifier)
-        {
-            if (!Application.isPlaying) { return; }
-            if (IsInvalidRuntime(identifier)) { return; }
-
-            pub_sdk_versionCheck(identifier);
-        }
+            pub_sdk_purchase(identifier, productId, channelId, characterId);
+        }        
 
         [DllImport("__Internal")]
         private static extern void pub_sdk_openNotice(string identifier);
@@ -254,13 +162,13 @@ namespace GamePub.PubSDK
         }
 
         [DllImport("__Internal")]
-        private static extern void pub_sdk_openHelpURL(string identifier);
-        public static void OpenHelpURL(string identifier)
+        private static extern void pub_sdk_openHelp(string identifier);
+        public static void OpenHelp(string identifier)
         {
             if (!Application.isPlaying) { return; }
             if (IsInvalidRuntime(identifier)) { return; }
 
-            pub_sdk_openHelpURL(identifier);
+            pub_sdk_openHelp(identifier);
         }
 
         [DllImport("__Internal")]
@@ -302,34 +210,15 @@ namespace GamePub.PubSDK
         }
 
         [DllImport("__Internal")]
-        private static extern void pub_sdk_ping(string identifier);
-        public static void Ping(string identifier)
+        private static extern void pub_sdk_setPushToken(string identifier,
+                                                        string pushToken);
+        public static void SetPushToken(string identifier, string pushToken)
         {
             if (!Application.isPlaying) { return; }
             if (IsInvalidRuntime(null)) { return; }
 
-            pub_sdk_ping(identifier);
-        }
-
-        [DllImport("__Internal")]
-        private static extern void pub_sdk_startPing();
-        public static void StartPing()
-        {
-            if (!Application.isPlaying) { return; }
-            if (IsInvalidRuntime(null)) { return; }
-
-            pub_sdk_startPing();
-        }
-
-        [DllImport("__Internal")]
-        private static extern void pub_sdk_stopPing();
-        public static void StopPing()
-        {
-            if (!Application.isPlaying) { return; }
-            if (IsInvalidRuntime(null)) { return; }
-
-            pub_sdk_stopPing();
-        }
+            pub_sdk_setPushToken(identifier, pushToken);
+        }          
 
         private static bool IsInvalidRuntime(string identifier)
         {

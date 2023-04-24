@@ -62,7 +62,10 @@ namespace GamePub.PubSDK
                                          Action<Result<PubRetryPurchaseResult>> action)
 		{
 			var identifier = AddAction(FlattenAction.JsonFlatten<PubRetryPurchaseResult>(action));
+
+#if UNITY_ANDROID
 			NativeInterface.RetryPurchase(identifier, channelId, characterId);
+#endif
 		}
 
 		public static void OpenVoided(string channelId,
@@ -70,7 +73,10 @@ namespace GamePub.PubSDK
 									  Action<Result<PubVoidedResult>> action)
 		{
 			var identifier = AddAction(FlattenAction.JsonFlatten<PubVoidedResult>(action));
+
+#if UNITY_ANDROID
 			NativeInterface.OpenVoided(identifier, channelId, characterId);
+#endif
 		}
 
 		public static void OpenTerms(Action<Result<PubUnit>> action)
