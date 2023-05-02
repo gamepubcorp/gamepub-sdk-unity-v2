@@ -39,13 +39,15 @@ namespace GamePub.PubSDK
 		[SerializeField] string endDate;
 		[SerializeField] string language;
 		[SerializeField] string message;
-		[SerializeField] string whiteIP = "";
+		//[SerializeField] string whiteIP = "";
+		[SerializeField] string clickLink = "";
 
 		public string StartDate { get => startDate; }
 		public string EndDate { get => endDate; }
 		public string Language { get => language; }
 		public string Message { get => message; }
-		public string WhiteIP { get => whiteIP; }
+		//public string WhiteIP { get => whiteIP }
+		public string ClickLink { get => clickLink; }
 	}
 
 }
