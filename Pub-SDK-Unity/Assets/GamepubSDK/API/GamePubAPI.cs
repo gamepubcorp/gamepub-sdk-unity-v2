@@ -95,22 +95,7 @@ namespace GamePub.PubSDK
 		{
 			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
 			NativeInterface.OpenHelp(identifier);
-		}
-
-		public static void SetPushToken(string pushToken,
-										Action<Result<PubUnit>> action)
-		{
-			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
-			NativeInterface.SetPushToken(identifier, pushToken);
-		}
-
-		public static void SetPushConfig(bool agreedPush,
-										 bool agreedNightPush,
-										 Action<Result<PubUnit>> action)
-		{
-			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
-			NativeInterface.SetPushConfig(identifier, agreedPush, agreedNightPush);
-		}
+		}		
 
 		static string AddAction(FlattenAction action)
         {

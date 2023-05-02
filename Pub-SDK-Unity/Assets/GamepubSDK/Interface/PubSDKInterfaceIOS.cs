@@ -43,16 +43,6 @@ namespace GamePub.PubSDK
         }
 
         [DllImport("__Internal")]
-        private static extern void pub_sdk_logout(string identifier);
-        public static void Logout(string identifier)
-        {
-            if (!Application.isPlaying) { return; }
-            if (IsInvalidRuntime(identifier)) { return; }
-
-            pub_sdk_logout(identifier);
-        }
-
-        [DllImport("__Internal")]
         private static extern void pub_sdk_autoLogin(string identifier);
         public static void AutoLogin(string identifier)
         {
@@ -63,27 +53,14 @@ namespace GamePub.PubSDK
         }
 
         [DllImport("__Internal")]
-        private static extern void pub_sdk_setPushConfig(bool push,
-                                                        bool pushNight);
-        public static void SetPushConfig(string identifier,
-                                         bool agreedPush,
-                                         bool agreedNightPush)
+        private static extern void pub_sdk_logout(string identifier);
+        public static void Logout(string identifier)
         {
             if (!Application.isPlaying) { return; }
             if (IsInvalidRuntime(identifier)) { return; }
 
-            pub_sdk_setPushConfig(agreedPush, agreedNightPush);
-        }        
-
-        //[DllImport("__Internal")]
-        //private static extern string pub_sdk_getProductList();
-        //public static string GetProductList()
-        //{
-        //    if (!Application.isPlaying) { return null; }
-        //    if (IsInvalidRuntime(null)) { return null; }
-
-        //    return pub_sdk_getProductList();
-        //}
+            pub_sdk_logout(identifier);
+        }
 
         [DllImport("__Internal")]
         private static extern void pub_sdk_withdraw(string identifier);
@@ -95,15 +72,31 @@ namespace GamePub.PubSDK
             pub_sdk_withdraw(identifier);
         }
 
-        //[DllImport("__Internal")]
-        //private static extern void pub_sdk_secedeCancel(string identifier);
-        //public static void SecedeCancel(string identifier)
-        //{
-        //    if (!Application.isPlaying) { return; }
-        //    if (IsInvalidRuntime(identifier)) { return; }
+        [DllImport("__Internal")]
+        private static extern void pub_sdk_initBilling(string identifier);
+        public static void InitBilling(string identifier)
+        {
+            if (!Application.isPlaying) { return; }
+            if (IsInvalidRuntime(identifier)) { return; }
 
-        //    pub_sdk_secedeCancel(identifier);
-        //}
+            pub_sdk_initBilling(identifier);
+        }
+
+        [DllImport("__Internal")]
+        private static extern void pub_sdk_purchase(string identifier,
+                                                    string productId,
+                                                    string channelId,
+                                                    string characterId);
+        public static void Purchase(string identifier,
+                                    string productId,
+                                    string channelId,
+                                    string characterId)
+        {
+            if (!Application.isPlaying) { return; }
+            if (IsInvalidRuntime(identifier)) { return; }
+
+            pub_sdk_purchase(identifier, productId, channelId, characterId);
+        }                
 
         [DllImport("__Internal")]
         private static extern void pub_sdk_openTerms(string identifier);
@@ -126,42 +119,6 @@ namespace GamePub.PubSDK
         }
 
         [DllImport("__Internal")]
-        private static extern void pub_sdk_initBilling(string identifier);
-        public static void InitBilling(string identifier)
-        {
-            if (!Application.isPlaying) { return; }
-            if (IsInvalidRuntime(identifier)) { return; }
-
-            pub_sdk_initBilling(identifier);
-        }
-
-        [DllImport("__Internal")]
-        private static extern void pub_sdk_purchase(string identifier,
-                                                         string productId,
-                                                         string channelId,
-                                                         string characterId);
-        public static void Purchase(string identifier,
-                                         string productId,
-                                         string channelId,
-                                         string characterId)
-        {
-            if (!Application.isPlaying) { return; }
-            if (IsInvalidRuntime(identifier)) { return; }
-
-            pub_sdk_purchase(identifier, productId, channelId, characterId);
-        }        
-
-        [DllImport("__Internal")]
-        private static extern void pub_sdk_openNotice(string identifier);
-        public static void OpenNotice(string identifier)
-        {
-            if (!Application.isPlaying) { return; }
-            if (IsInvalidRuntime(identifier)) { return; }
-
-            pub_sdk_openNotice(identifier);
-        }
-
-        [DllImport("__Internal")]
         private static extern void pub_sdk_openHelp(string identifier);
         public static void OpenHelp(string identifier)
         {
@@ -172,53 +129,26 @@ namespace GamePub.PubSDK
         }
 
         [DllImport("__Internal")]
-        private static extern void pub_sdk_couponUse(string identifier,
-                                                     string key,
-                                                     string serverId,
-                                                     string playerId,
-                                                     string etc);
-        public static void CouponUse(string identifier,
-                                     string key,
-                                     string serverId,
-                                     string playerId,
-                                     string etc)
-        {
-            if (!Application.isPlaying) { return; }
-            if (IsInvalidRuntime(identifier)) { return; }
-
-            pub_sdk_couponUse(identifier, key, serverId, playerId, etc);
-        }
-
-        [DllImport("__Internal")]
-        private static extern void pub_sdk_syncRemoteConfig(string identifier);
-        public static void SyncRemoteConfig(string identifier)
-        {
-            if (!Application.isPlaying) { return; }
-            if (IsInvalidRuntime(identifier)) { return; }
-
-            pub_sdk_syncRemoteConfig(identifier);
-        }
-
-        [DllImport("__Internal")]
-        private static extern string pub_sdk_getRemoteConfigValue(string key);
-        public static string GetRemoteConfigValue(string key)
-        {
-            if (!Application.isPlaying) { return null; }
-            if (IsInvalidRuntime(null)) { return null; }
-
-            return pub_sdk_getRemoteConfigValue(key);
-        }
-
-        [DllImport("__Internal")]
-        private static extern void pub_sdk_setPushToken(string identifier,
-                                                        string pushToken);
-        public static void SetPushToken(string identifier, string pushToken)
+        private static extern void pub_sdk_setPushToken(string pushToken);
+        public static void SetPushToken(string pushToken)
         {
             if (!Application.isPlaying) { return; }
             if (IsInvalidRuntime(null)) { return; }
 
-            pub_sdk_setPushToken(identifier, pushToken);
-        }          
+            pub_sdk_setPushToken(pushToken);
+        }
+
+        [DllImport("__Internal")]
+        private static extern void pub_sdk_setPushConfig(bool agreedPush,
+                                                         bool agreedNightPush);
+        public static void SetPushConfig(bool agreedPush,
+                                         bool agreedNightPush)
+        {
+            if (!Application.isPlaying) { return; }
+            if (IsInvalidRuntime(null)) { return; }
+
+            pub_sdk_setPushConfig(agreedPush, agreedNightPush);
+        }        
 
         private static bool IsInvalidRuntime(string identifier)
         {

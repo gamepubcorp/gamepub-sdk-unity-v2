@@ -108,18 +108,16 @@ namespace GamePub.PubSDK
 			GamePubAPI.OpenHelp(action);
 		}
 
-		public void SetPushToken(string pushToken,
-								Action<Result<PubUnit>> action)
-		{
-			GamePubAPI.SetPushToken(pushToken, action);
-		}
+		public void SetPushToken(string pushToken)
+		{			
+            NativeInterface.SetPushToken(pushToken);
+        }
 
 		public void SetPushConfig(bool agreedPush,
-								  bool agreedNightPush,
-								  Action<Result<PubUnit>> action)
-		{
-			GamePubAPI.SetPushConfig(agreedPush, agreedNightPush, action);
-		}
+								  bool agreedNightPush)
+		{			
+            NativeInterface.SetPushConfig(agreedPush, agreedNightPush);
+        }
 
 		public void OnApiOk(string result)
         {
