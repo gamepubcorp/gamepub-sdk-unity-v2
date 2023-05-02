@@ -129,28 +129,25 @@ namespace GamePub.PubSDK
         }
 
         [DllImport("__Internal")]
-        private static extern void pub_sdk_setPushToken(string identifier,
-                                                        string pushToken);
-        public static void SetPushToken(string identifier, string pushToken)
+        private static extern void pub_sdk_setPushToken(string pushToken);
+        public static void SetPushToken(string pushToken)
         {
             if (!Application.isPlaying) { return; }
             if (IsInvalidRuntime(null)) { return; }
 
-            pub_sdk_setPushToken(identifier, pushToken);
+            pub_sdk_setPushToken(pushToken);
         }
 
         [DllImport("__Internal")]
-        private static extern void pub_sdk_setPushConfig(string identifier,
-                                                         bool agreedPush,
+        private static extern void pub_sdk_setPushConfig(bool agreedPush,
                                                          bool agreedNightPush);
-        public static void SetPushConfig(string identifier,
-                                         bool agreedPush,
+        public static void SetPushConfig(bool agreedPush,
                                          bool agreedNightPush)
         {
             if (!Application.isPlaying) { return; }
-            if (IsInvalidRuntime(identifier)) { return; }
+            if (IsInvalidRuntime(null)) { return; }
 
-            pub_sdk_setPushConfig(identifier, agreedPush, agreedNightPush);
+            pub_sdk_setPushConfig(agreedPush, agreedNightPush);
         }        
 
         private static bool IsInvalidRuntime(string identifier)

@@ -339,15 +339,7 @@ public class LoginController : MonoBehaviour
 			string fcmToken = task.Result;
 			Debug.Log("fcmToken: " + fcmToken);
 
-			GamePubSDK.Ins.SetPushToken(fcmToken, result => {
-				result.Match(
-					value => {
-						Debug.Log("SetPushToken: " + value.Code.ToString() + " " + value.Message);
-					},
-					error => {
-						Debug.Log("SetPushToken: " + error.ErrCode.ToString() + " " + error.Message);
-					});
-			});
+			GamePubSDK.Ins.SetPushToken(fcmToken);
 		});
 	}
 
@@ -356,14 +348,6 @@ public class LoginController : MonoBehaviour
 		bool agreedPush = true;
 		bool agreedNightPush = false;
 
-		GamePubSDK.Ins.SetPushConfig(agreedPush, agreedNightPush, result => {
-			result.Match(
-				value => {
-					Debug.Log("SetPushConfig: " + value.Code.ToString() + " " + value.Message);
-				},
-				error => {
-					Debug.Log("SetPushConfig: " + error.ErrCode.ToString() + " " + error.Message);
-				});
-		});
+		GamePubSDK.Ins.SetPushConfig(agreedPush, agreedNightPush);
 	}
 }
