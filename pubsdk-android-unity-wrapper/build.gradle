@@ -4,8 +4,8 @@ apply plugin: 'kotlin-android'
 
 buildscript {
     ext.kotlin_version = '1.4.20'
-    ext.staging_num = '1163'
-    ext.sdk_version = '2.1.7'
+    ext.staging_num = '1171'
+    ext.sdk_version = '2.1.8'
 
     repositories {
         google()

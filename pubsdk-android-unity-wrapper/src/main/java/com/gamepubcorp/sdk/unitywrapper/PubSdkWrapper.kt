@@ -4,11 +4,11 @@ import io.github.gamepubcorp.api.PubApiClient
 import io.github.gamepubcorp.api.PubApiClientBuilder
 import com.gamepubcorp.sdk.unitywrapper.CallbackMessageForUnity.Companion.sendMessageError
 import com.gamepubcorp.sdk.unitywrapper.auth.PubSdkWrapperActivity
-import com.gamepubcorp.sdk.unitywrapper.util.Log
 import com.google.gson.Gson
 import com.unity3d.player.UnityPlayer
 import io.github.gamepubcorp.result.*
 import io.github.gamepubcorp.utils.PubCallback
+
 
 class PubSdkWrapper {
 
@@ -17,12 +17,12 @@ class PubSdkWrapper {
     private val gson = Gson()
 
     fun setupSDK(identifier: String,
-                 projectId: String) {
+                 projectId: String
+    ) {
         val currentActivity = UnityPlayer.currentActivity
-        Log.d(TAG, "setup sdk: $projectId")
 
         pubApiClient = PubApiClientBuilder(currentActivity, projectId.toInt()).build()
-        pubApiClient.setupSDK(PubCallback<PubSetupResult>().apply {
+        pubApiClient.setupSDK(currentActivity, PubCallback<PubSetupResult>().apply {
             success = { res ->
                 val result = gson.toJson(res)
                 CallbackMessageForUnity(identifier, result).sendMessageOk()
@@ -35,13 +35,13 @@ class PubSdkWrapper {
 
     fun login(identifier: String,
               loginType: Int,
-              accountServiceType: Int) {
+              accountServiceType: Int
+    ) {
         val currentActivity = UnityPlayer.currentActivity
-
-        Log.d(TAG, "login type: $loginType")
-        Log.d(TAG, "service type: $accountServiceType")
-        //type check
-
+//        if (!this::pubApiClient.isInitialized) {
+//            sendSdkNotInitializedError(currentActivity, identifier)
+//            return
+//        }
         PubSdkWrapperActivity.startActivity(
             currentActivity,
             identifier,
@@ -51,8 +51,9 @@ class PubSdkWrapper {
     }
 
     fun autoLogin(identifier: String) {
+        val currentActivity = UnityPlayer.currentActivity
 
-        pubApiClient.autologin(PubCallback<PubUnit>().apply {
+        pubApiClient.autologin(currentActivity, PubCallback<PubLoginResult>().apply {
             success = { res ->
                 val result = gson.toJson(res)
                 CallbackMessageForUnity(identifier, result).sendMessageOk()
@@ -64,6 +65,7 @@ class PubSdkWrapper {
     }
 
     fun logout(identifier: String) {
+
         val currentActivity = UnityPlayer.currentActivity
 
         pubApiClient.logout(currentActivity, PubCallback<PubUnit>().apply {
@@ -79,7 +81,9 @@ class PubSdkWrapper {
 
     fun withdraw(identifier: String) {
 
-        pubApiClient.withdraw(PubCallback<PubUnit>().apply {
+        val currentActivity = UnityPlayer.currentActivity
+
+        pubApiClient.withdraw(currentActivity, PubCallback<PubUnit>().apply {
             success = { res ->
                 val result = gson.toJson(res)
                 CallbackMessageForUnity(identifier, result).sendMessageOk()
@@ -91,25 +95,25 @@ class PubSdkWrapper {
     }
 
     fun initBilling(identifier: String) {
+
         val currentActivity = UnityPlayer.currentActivity
 
-        pubApiClient.initBilling(currentActivity,
-            PubCallback<PubInitBillingResult>().apply {
-                success = { res ->
-                    val result = gson.toJson(res)
-                    CallbackMessageForUnity(identifier, result).sendMessageOk()
-                }
-                error = { err ->
-                    sendMessageError(identifier, err)
-                }
+        pubApiClient.initBilling(currentActivity, PubCallback<PubInitBillingResult>().apply {
+            success = { res ->
+                val result = gson.toJson(res)
+                CallbackMessageForUnity(identifier, result).sendMessageOk()
             }
-        )
+            error = { err ->
+                sendMessageError(identifier, err)
+            }
+        })
     }
 
     fun purchase(identifier: String,
                  productId: String,
                  channelId: String,
-                 characterId: String) {
+                 characterId: String
+    ) {
         val currentActivity = UnityPlayer.currentActivity
 
         pubApiClient.purchase(
@@ -131,7 +135,8 @@ class PubSdkWrapper {
 
     fun retryPurchase(identifier: String,
                       channelId: String,
-                      characterId: String) {
+                      characterId: String
+    ) {
         val currentActivity = UnityPlayer.currentActivity
 
         pubApiClient.retryPurchase(
@@ -151,8 +156,9 @@ class PubSdkWrapper {
     }
 
     fun openVoided(identifier: String,
-               channelId: String,
-               characterId: String){
+                   channelId: String,
+                   characterId: String
+    ){
         val currentActivity = UnityPlayer.currentActivity
 
         pubApiClient.openVoided(
@@ -171,6 +177,7 @@ class PubSdkWrapper {
     }
 
     fun openTerms(identifier: String){
+
         val currentActivity = UnityPlayer.currentActivity
 
         pubApiClient.openTerms(currentActivity, PubCallback<PubUnit>().apply {
@@ -184,64 +191,26 @@ class PubSdkWrapper {
         })
     }
 
-    fun openImageBanner(identifier: String) {
+    fun openImageBanner() {
+
         val currentActivity = UnityPlayer.currentActivity
-
-        pubApiClient.openImageBanner(currentActivity, PubCallback<PubUnit>().apply {
-            success = { res ->
-                val result = gson.toJson(res)
-                CallbackMessageForUnity(identifier, result).sendMessageOk()
-            }
-            error = { err ->
-                sendMessageError(identifier, err)
-            }
-        })
+        pubApiClient.openImageBanner(currentActivity)
     }
 
-    fun openHelp(identifier: String) {
+    fun openHelp() {
+
         val currentActivity = UnityPlayer.currentActivity
-
-        pubApiClient.openHelp(currentActivity, PubCallback<PubUnit>().apply {
-            success = { res ->
-                val result = gson.toJson(res)
-                CallbackMessageForUnity(identifier, result).sendMessageOk()
-            }
-            error = { err ->
-                sendMessageError(identifier, err)
-            }
-        })
+        pubApiClient.openHelp(currentActivity)
     }
 
-    fun setPushToken(identifier: String,
-                     pushToken: String) {
+    fun setPushToken(pushToken: String) {
 
-        pubApiClient.setPushToken(pushToken, PubCallback<PubUnit>().apply {
-            success = { res ->
-                val result = gson.toJson(res)
-                CallbackMessageForUnity(identifier, result).sendMessageOk()
-            }
-            error = { err ->
-                sendMessageError(identifier, err)
-            }
-        })
+        pubApiClient.setPushToken(pushToken)
     }
 
-    fun setPushConfig(identifier: String,
-                      agreedPush: Boolean,
+    fun setPushConfig(agreedPush: Boolean,
                       agreedNightPush: Boolean) {
 
-        pubApiClient.setPushConfig(
-            agreedPush,
-            agreedNightPush,
-            PubCallback<PubUnit>().apply {
-                success = { res ->
-                    val result = gson.toJson(res)
-                    CallbackMessageForUnity(identifier, result).sendMessageOk()
-                }
-                error = { err ->
-                    sendMessageError(identifier, err)
-                }
-            }
-        )
+        pubApiClient.setPushConfig(agreedPush, agreedNightPush)
     }
 }

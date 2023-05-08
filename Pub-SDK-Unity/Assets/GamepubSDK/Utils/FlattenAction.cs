@@ -22,7 +22,7 @@ namespace GamePub.PubSDK
                     action.Invoke(result);
                 },
                 error => {
-                    var result = Result<T>.Error(JsonUtility.FromJson<PubApiError>(error));
+                    var result = Result<T>.Error(JsonUtility.FromJson<PubSdkError>(error));
                     action.Invoke(result);
                 }
             );
@@ -37,7 +37,7 @@ namespace GamePub.PubSDK
                     action.Invoke(result);
                 },
                 error => {
-                    var result = Result<Unit>.Error(JsonUtility.FromJson<PubApiError>(error));
+                    var result = Result<Unit>.Error(JsonUtility.FromJson<PubSdkError>(error));
                     action.Invoke(result);
                 }
             );

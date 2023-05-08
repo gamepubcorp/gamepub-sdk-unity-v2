@@ -7,9 +7,10 @@ import android.util.Log
 import com.gamepubcorp.sdk.unitywrapper.CallbackMessageForUnity
 import io.github.gamepubcorp.auth.PubLoginApi
 import com.gamepubcorp.sdk.unitywrapper.CallbackMessageForUnity.Companion.sendMessageError
+import com.gamepubcorp.sdk.unitywrapper.R
 import com.google.gson.Gson
-import io.github.gamepubcorp.code.PubResponseCode
-import io.github.gamepubcorp.result.PubApiError
+import io.github.gamepubcorp.code.PubSdkErrorCode
+import io.github.gamepubcorp.result.PubSdkError
 
 //enum class AccountServiceType(val type: Int) {
 //    ACCOUNT_LOGIN(1),
@@ -72,9 +73,9 @@ class PubSdkWrapperActivity : Activity() {
             startActivityForResult(loginIntent, REQUEST_CODE_LOGIN)
         }
         else {
-            sendMessageError(identifier, PubApiError(
-                PubResponseCode.AUTH_WRONG_TYPE_INPUT.code,
-                "wrong login type input."
+            sendMessageError(identifier, PubSdkError(
+                PubSdkErrorCode.AUTH_UNSUPPORTED_PROVIDER.code,
+                getString(R.string.msg_auth_unsupported_provider)
             ))
         }
     }
@@ -87,14 +88,22 @@ class PubSdkWrapperActivity : Activity() {
             val result = PubLoginApi.getLoginResultFromIntent(resultCode, data)
             Log.d(TAG, "login result:$result")
 
-            when(result.responseCode) {
-                PubResponseCode.SUCCESS -> {
-                    val resultForUnity = LoginResultForUnity.convertPubResult(result)
-                    val resultJsonString = gson.toJson(resultForUnity)
+            when(result.code) {
+                PubSdkErrorCode.SUCCESS.code -> {
+//                    val resultForUnity = LoginResultForUnity.convertPubResult(result)
+                    val resultJsonString = gson.toJson(result)
+                    CallbackMessageForUnity(identifier, resultJsonString).sendMessageOk()
+                }
+                PubSdkErrorCode.BANNED_USER.code -> {
+                    val resultJsonString = gson.toJson(result)
+                    CallbackMessageForUnity(identifier, resultJsonString).sendMessageOk()
+                }
+                PubSdkErrorCode.SERVER_MAINTENANCE.code -> {
+                    val resultJsonString = gson.toJson(result)
                     CallbackMessageForUnity(identifier, resultJsonString).sendMessageOk()
                 }
                 else -> {
-                    result.errorData?.let { sendMessageError(identifier, it) }
+                    sendMessageError(identifier, PubSdkError(result.code, result.message))
                 }
             }
         }

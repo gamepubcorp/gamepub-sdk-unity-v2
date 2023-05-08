@@ -6,7 +6,7 @@ namespace GamePub.PubSDK
     {
 
         private T value;
-        private PubApiError error;
+        private PubSdkError error;
 
         private bool success;
        
@@ -22,7 +22,7 @@ namespace GamePub.PubSDK
             return r;
         }
         
-        public static Result<T> Error(PubApiError error)
+        public static Result<T> Error(PubSdkError error)
         {
             var r = new Result<T>();
             r.error = error;
@@ -36,13 +36,13 @@ namespace GamePub.PubSDK
             if (IsSuccess) { onMatched(value); }
         }
        
-        public void MatchError(System.Action<PubApiError> onMatched)
+        public void MatchError(System.Action<PubSdkError> onMatched)
         {
             if (onMatched == null) throw new System.Exception("Match callback is null!");
             if (IsFailure) { onMatched(error); }
         }
         
-        public void Match(System.Action<T> onMatchedOk, System.Action<PubApiError> onMatchedError)
+        public void Match(System.Action<T> onMatchedOk, System.Action<PubSdkError> onMatchedError)
         {
             MatchOk(onMatchedOk);
             MatchError(onMatchedError);

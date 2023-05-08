@@ -4,7 +4,7 @@ using UnityEngine;
 namespace GamePub.PubSDK
 {
     [Serializable]
-    public class PubApiError
+    public class PubSdkError
     {        
         [SerializeField]
         private int errCode;
@@ -15,7 +15,7 @@ namespace GamePub.PubSDK
 
         public string Message { get { return message; } }
 
-        public PubApiError(int errCode, string message)
+        public PubSdkError(int errCode, string message)
         {            
             this.errCode = errCode;
             this.message = message;

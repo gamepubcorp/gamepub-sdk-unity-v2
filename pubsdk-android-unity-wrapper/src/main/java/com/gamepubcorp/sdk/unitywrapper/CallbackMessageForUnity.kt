@@ -1,8 +1,10 @@
 package com.gamepubcorp.sdk.unitywrapper
 
+import android.app.Activity
 import com.google.gson.Gson
 import com.unity3d.player.UnityPlayer
-import io.github.gamepubcorp.result.PubApiError
+import io.github.gamepubcorp.code.PubSdkErrorCode
+import io.github.gamepubcorp.result.PubSdkError
 
 data class CallbackMessageForUnity(
     val identifier: String,
@@ -36,10 +38,22 @@ data class CallbackMessageForUnity(
 
         fun sendMessageError(
             identifier: String,
-            apiError: PubApiError
+            apiError: PubSdkError
         ) {
             val jsonError = gson.toJson(apiError)
-            CallbackMessageForUnity(identifier, jsonError).sendMessageError();
+            CallbackMessageForUnity(identifier, jsonError).sendMessageError()
+        }
+
+        fun sendSdkNotInitializedError(
+            activity: Activity,
+            identifier: String
+        ) {
+            val apiError = PubSdkError(
+                PubSdkErrorCode.SDK_NOT_INITIALIZED.code,
+                activity.getString(R.string.msg_sdk_not_initialized)
+            )
+            val jsonError = gson.toJson(apiError)
+            CallbackMessageForUnity(identifier, jsonError).sendMessageError()
         }
     }
 }

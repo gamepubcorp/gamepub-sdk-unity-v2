@@ -36,7 +36,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-iid:21.1.0' // Assets/Firebase/Editor/MessagingDependencies.xml:17
     implementation 'com.google.firebase:firebase-messaging:23.1.1' // Assets/Firebase/Editor/MessagingDependencies.xml:13
     implementation 'com.google.firebase:firebase-messaging-unity:10.5.0' // Assets/Firebase/Editor/MessagingDependencies.xml:22
-    implementation 'io.github.gamepubcorp:pubsdk:2.1.7' // Assets/GamepubSDK/Editor/PubSDKDependencies.xml:9
+    implementation 'io.github.gamepubcorp:pubsdk:2.1.8' // Assets/GamepubSDK/Editor/PubSDKDependencies.xml:9
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.61' // Assets/GamepubSDK/Editor/PubSDKDependencies.xml:11
 // Android Resolver Dependencies End
 **DEPS**}

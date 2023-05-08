@@ -24,9 +24,9 @@ namespace GamePub.PubSDK
             NativeInterface.Login(identifier, loginType, serviceType);
         }
 
-        public static void AutoLogin(Action<Result<PubUnit>> action)
+        public static void AutoLogin(Action<Result<PubLoginResult>> action)
         {
-			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
+			var identifier = AddAction(FlattenAction.JsonFlatten<PubLoginResult>(action));
 			NativeInterface.AutoLogin(identifier);
 		}
 
@@ -84,18 +84,6 @@ namespace GamePub.PubSDK
 			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
 			NativeInterface.OpenTerms(identifier);
 		}
-
-		public static void OpenImageBanner(Action<Result<PubUnit>> action)
-		{
-			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
-			NativeInterface.OpenImageBanner(identifier);
-		}
-
-		public static void OpenHelp(Action<Result<PubUnit>> action)
-		{
-			var identifier = AddAction(FlattenAction.JsonFlatten<PubUnit>(action));
-			NativeInterface.OpenHelp(identifier);
-		}		
 
 		static string AddAction(FlattenAction action)
         {

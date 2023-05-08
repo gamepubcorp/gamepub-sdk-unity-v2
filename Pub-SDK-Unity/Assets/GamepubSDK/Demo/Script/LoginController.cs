@@ -5,7 +5,6 @@ using Firebase.Messaging;
 using Firebase.Extensions;
 using Unity.Notifications.Android;
 using UnityEngine.Android;
-using System.Text;
 
 public class LoginController : MonoBehaviour
 {
@@ -121,15 +120,24 @@ public class LoginController : MonoBehaviour
 				value => {
 					Debug.Log(JsonUtility.ToJson(value));
 
-					GamePubSDK.Ins.InitBilling(result => {
-						result.Match(
-							value => {
-								Debug.Log(JsonUtility.ToJson(value));
-							},
-							error => {
-								Debug.Log("InitBilling: "+error.ErrCode.ToString()+" "+error.Message);
+					switch (value.Code)
+					{
+						case (int)PubSdkErrorCode.SUCCESS:
+							GamePubSDK.Ins.InitBilling(result => {
+								result.Match(
+									value => {
+										Debug.Log(JsonUtility.ToJson(value));
+									},
+									error => {
+										Debug.Log("InitBilling: " + error.ErrCode.ToString() + " " + error.Message);
+									});
 							});
-					});
+							break;
+
+						case (int)PubSdkErrorCode.SERVER_MAINTENANCE:
+							Debug.Log(value.Inspect.Message);
+							break;
+					}
 				},
 				error => {
 					Debug.Log("Setup: " + error.ErrCode.ToString() + " " + error.Message);
@@ -164,7 +172,26 @@ public class LoginController : MonoBehaviour
 			result => {
 				result.Match(
 					value => {
-						Debug.Log("Login: " + JsonUtility.ToJson(value));
+						switch (value.Code)
+						{
+							case (int)PubSdkErrorCode.SUCCESS:
+								Debug.Log("Login: " + JsonUtility.ToJson(value));
+								break;
+
+							case (int)PubSdkErrorCode.BANNED_USER:
+								Debug.Log("This user has been banned.");
+								Debug.Log("ban message: "+value.RegMessage);
+								Debug.Log("startDate: "+value.StartDate);
+								Debug.Log("endDate: "+value.EndDate);
+								break;
+
+							case (int)PubSdkErrorCode.SERVER_MAINTENANCE:
+								Debug.Log("The game server is in maintenance.");
+								Debug.Log("inspect message: " + value.RegMessage);
+								Debug.Log("startDate: " + value.StartDate);
+								Debug.Log("endDate: " + value.EndDate);
+								break;
+						}
 					},
 					error => {
 						Debug.Log("Login: " + error.ErrCode.ToString() + " " + error.Message);
@@ -176,7 +203,7 @@ public class LoginController : MonoBehaviour
 		GamePubSDK.Ins.AutoLogin(result => {
 			result.Match(
 				value => {
-					Debug.Log("AutoLogin: " + value.Code.ToString() + " " + value.Message);
+					Debug.Log("AutoLogin: " + JsonUtility.ToJson(value));
 				},
 				error => {
 					Debug.Log("AutoLogin: " + error.ErrCode.ToString() + " " + error.Message);
@@ -246,8 +273,6 @@ public class LoginController : MonoBehaviour
 	public void Purchase(int productNum)
 	{
 		string productId = "pubsdk_"+productNum+"000";
-		//string productId = "com.gamepub.test"+productNum+"000";
-
 		string channelId = "unityTestChannelId";
 		string characterId = "unityTestCharacterId";
 
@@ -309,28 +334,12 @@ public class LoginController : MonoBehaviour
 
 	public void OpenImageBanner()
 	{
-		GamePubSDK.Ins.OpenImageBanner(result => {
-			result.Match(
-				value => {
-					Debug.Log("Banner: " + value.Code.ToString() + " " + value.Message);
-				},
-				error => {
-					Debug.Log("Banner: " + error.ErrCode.ToString() + " " + error.Message);
-				});
-		});
+		GamePubSDK.Ins.OpenImageBanner();
 	}
 
 	public void OpenHelp()
 	{
-		GamePubSDK.Ins.OpenHelp(result => {
-			result.Match(
-				value => {
-					Debug.Log("Help: " + value.Code.ToString() + " " + value.Message);
-				},
-				error => {
-					Debug.Log("Help: " + error.ErrCode.ToString() + " " + error.Message);
-				});
-		});
+		GamePubSDK.Ins.OpenHelp();
 	}
 
 	public void SetPushToken()

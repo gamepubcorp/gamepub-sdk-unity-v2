@@ -51,7 +51,7 @@ namespace GamePub.PubSDK
             GamePubAPI.Login(loginType, serviceType, action);
         }
 
-		public void AutoLogin(Action<Result<PubUnit>> action)
+		public void AutoLogin(Action<Result<PubLoginResult>> action)
 		{
 			GamePubAPI.AutoLogin(action);
 		}
@@ -98,14 +98,14 @@ namespace GamePub.PubSDK
 			GamePubAPI.OpenTerms(action);
 		}
 
-		public void OpenImageBanner(Action<Result<PubUnit>> action)
+		public void OpenImageBanner()
 		{
-			GamePubAPI.OpenImageBanner(action);
+			NativeInterface.OpenImageBanner();
 		}
 
-		public void OpenHelp(Action<Result<PubUnit>> action)
+		public void OpenHelp()
 		{
-			GamePubAPI.OpenHelp(action);
+			NativeInterface.OpenHelp();
 		}
 
 		public void SetPushToken(string pushToken)
