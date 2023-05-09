@@ -109,23 +109,23 @@ namespace GamePub.PubSDK
         }        
 
         [DllImport("__Internal")]
-        private static extern void pub_sdk_openImageBanner(string identifier);
-        public static void OpenImageBanner(string identifier)
+        private static extern void pub_sdk_openImageBanner();
+        public static void OpenImageBanner()
         {
             if (!Application.isPlaying) { return; }
-            if (IsInvalidRuntime(identifier)) { return; }
+            if (IsInvalidRuntime(null)) { return; }
 
-            pub_sdk_openImageBanner(identifier);
+            pub_sdk_openImageBanner();
         }
 
         [DllImport("__Internal")]
-        private static extern void pub_sdk_openHelp(string identifier);
-        public static void OpenHelp(string identifier)
+        private static extern void pub_sdk_openHelp();
+        public static void OpenHelp()
         {
             if (!Application.isPlaying) { return; }
-            if (IsInvalidRuntime(identifier)) { return; }
+            if (IsInvalidRuntime(null)) { return; }
 
-            pub_sdk_openHelp(identifier);
+            pub_sdk_openHelp();
         }
 
         [DllImport("__Internal")]

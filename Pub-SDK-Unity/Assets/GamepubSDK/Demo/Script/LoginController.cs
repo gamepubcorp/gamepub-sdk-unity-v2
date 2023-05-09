@@ -3,8 +3,13 @@ using GamePub.PubSDK;
 using Firebase;
 using Firebase.Messaging;
 using Firebase.Extensions;
+#if UNITY_ANDROID
 using Unity.Notifications.Android;
 using UnityEngine.Android;
+#elif UNITY_IOS
+using Unity.Notifications.iOS;
+#endif
+using System.Collections;
 
 public class LoginController : MonoBehaviour
 {
@@ -18,13 +23,27 @@ public class LoginController : MonoBehaviour
 		InitializeAndroidLocalPush();
 		InitializeFCM();
 #elif UNITY_IOS
-
-#endif 
+		InitAPNS();
+#endif
 		SetupSDKandInitBilling();
     }
 
+	IEnumerator InitAPNS()
+    {
+		using (var req = new AuthorizationRequest(AuthorizationOption.Sound | AuthorizationOption.Alert | AuthorizationOption.Badge, true))
+		{
+			while (!req.IsFinished)
+			{
+				yield return null;
+			};
+
+			GamePubSDK.Ins.SetPushToken(req.DeviceToken);
+		}
+	}
+
 	public void InitializeAndroidLocalPush()
 	{
+#if UNITY_ANDROID
 		string androidInfo = SystemInfo.operatingSystem;
 		Debug.Log("androidInfo: " + androidInfo);
 		apiLevel = int.Parse(androidInfo.Substring(androidInfo.IndexOf("-") + 1, 2));
@@ -47,6 +66,7 @@ public class LoginController : MonoBehaviour
 			};
 			AndroidNotificationCenter.RegisterNotificationChannel(channel);
 		}
+#endif
 	}
 
 	public void InitializeFCM()
@@ -96,6 +116,7 @@ public class LoginController : MonoBehaviour
 		}
 		Debug.Log("message type: " + type + ", title: " + title + ", body: " + body);
 
+#if UNITY_ANDROID
 		// send local notification
 		var notification = new AndroidNotification();
 		notification.SmallIcon = "icon_0";
@@ -111,6 +132,7 @@ public class LoginController : MonoBehaviour
 		{
 			Debug.LogError("Notifications couldn't be displayed, because the Android SDK level of your device is lower than 26.");
 		}
+#endif
 	}
 
 	public void SetupSDKandInitBilling()
@@ -272,9 +294,15 @@ public class LoginController : MonoBehaviour
 
 	public void Purchase(int productNum)
 	{
+#if UNITY_IOS		
+		string productId = "com.gamepub.unity.inapp1200";
+		string channelId = "";
+		string characterId = "";
+#else
 		string productId = "pubsdk_"+productNum+"000";
 		string channelId = "unityTestChannelId";
 		string characterId = "unityTestCharacterId";
+#endif
 
 		GamePubSDK.Ins.Purchase(productId, channelId, characterId, result => {
 			result.Match(
@@ -349,7 +377,7 @@ public class LoginController : MonoBehaviour
 			Debug.Log("fcmToken: " + fcmToken);
 
 			GamePubSDK.Ins.SetPushToken(fcmToken);
-		});
+		});		
 	}
 
 	public void SetPushConfig()
