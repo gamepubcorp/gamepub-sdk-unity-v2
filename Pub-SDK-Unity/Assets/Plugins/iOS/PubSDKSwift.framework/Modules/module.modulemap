@@ -1,0 +1,11 @@
+framework module PubSDKSwift {
+  umbrella header "PubSDKSwift.h"
+
+  export *
+  module * { export * }
+}
+
+module PubSDKSwift.Swift {
+  header "PubSDKSwift-Swift.h"
+  requires objc
+}
